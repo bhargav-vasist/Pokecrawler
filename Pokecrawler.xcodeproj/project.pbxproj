@@ -127,12 +127,12 @@
 		BEE0931529C8F5C900D304F9 /* Pokecrawler */ = {
 			isa = PBXGroup;
 			children = (
-				BEE0934E29C8F7C200D304F9 /* Project Files */,
-				BEE0934F29C8F7CB00D304F9 /* Controllers */,
 				BEE0932429C8F5CA00D304F9 /* Info.plist */,
+				BEE0934F29C8F7CB00D304F9 /* Controllers */,
 				BEE0935029C8F7D400D304F9 /* Managers */,
-				BEE0935129C8F7DB00D304F9 /* Utilities */,
 				BEE0935429C8F7F200D304F9 /* Models */,
+				BEE0934E29C8F7C200D304F9 /* Project Files */,
+				BEE0935129C8F7DB00D304F9 /* Utilities */,
 				BEE0935729C8F80900D304F9 /* Views */,
 			);
 			path = Pokecrawler;

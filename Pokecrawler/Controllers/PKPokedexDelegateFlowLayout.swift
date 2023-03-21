@@ -49,4 +49,19 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
         }
         print("You have selected", pokemon.name)
     }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard let hasMorePokemon = pokedexViewController?.pokedexDataSource.hasMorePokemon, hasMorePokemon else { return }
+        
+        let contentHeight = scrollView.contentSize.height
+        let contentOffset = scrollView.contentOffset.y
+        let scrollViewFrameHeight = scrollView.frame.size.height
+        
+        print("ScrollViewFrameHeight - \(scrollViewFrameHeight) \nContentOffset - \(contentOffset) \nContent Height - \(contentHeight)\n ")
+        
+        if (scrollViewFrameHeight + contentOffset) > (contentHeight - 300)  {
+            print("Fetching more for you m'lord")
+            pokedexViewController?.pokedexDataSource.fetchEvenMorePokeData()
+        }
+    }
 }

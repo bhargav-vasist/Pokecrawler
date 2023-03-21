@@ -66,10 +66,11 @@ extension Endpoint {
 }
 
 extension Endpoint {
-    static func getAllPokemon(with offset: Int? = nil) -> Self {
-        var queryItems = [
-            URLQueryItem(name: "limit", value: "10")
-         ]
+    static func getAllPokemon(with limit: Int? = nil, and offset: Int? = nil) -> Self {
+        var queryItems: [URLQueryItem] = []
+        if let limitValue = limit {
+            queryItems.append(URLQueryItem(name: "limit", value: String(limitValue)))
+        }
         if let offsetValue = offset {
             queryItems.append(URLQueryItem(name: "offset", value: String(offsetValue)))
         }
