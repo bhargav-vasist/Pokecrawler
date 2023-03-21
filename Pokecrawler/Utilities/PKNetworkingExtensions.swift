@@ -6,3 +6,37 @@
 //
 
 import Foundation
+
+// Inspired by https://www.swiftbysundell.com/articles/constructing-urls-in-swift/
+extension URL {
+    init(staticString string: StaticString) {
+        guard let url = URL(string: "\(string)") else {
+            preconditionFailure("Invalid static URL string: \(string)")
+        }
+        
+        self = url
+    }
+}
+
+// Inspired by https://www.swiftbysundell.com/articles/mocking-in-swift/
+extension URLSession: NetworkSession {
+    
+    @discardableResult
+    func loadData(
+        _ url: URL,
+        then handler: @escaping NetworkHandler
+    ) -> URLSessionDataTask? {
+        
+        let task = dataTask(with: url) { data, _, error in
+            if let error = error {
+                handler(.failure(NetworkingError.serverError(error.localizedDescription)))
+            } else if let data = data {
+                handler(.success(data))
+            } else {
+                handler(.failure(NetworkingError.invalidServerResponse))
+            }
+        }
+        return task
+        
+    }
+}
