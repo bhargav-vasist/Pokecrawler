@@ -21,12 +21,20 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
     var hasMorePokemon = true
     
     func fetchPokeData() {
+        PKNetworkManager().fetchPaginated(.getAllPokemon()) { [weak self] result in
+            switch result {
+            case .success(let pokeData):
+                let jsonDecoder = PKPokemonModel.decoder
+                let pokemon = pokeData.compactMap({ try? jsonDecoder.decode(PKPokemonModel.self, from: $0)}).sorted(by: { $0.id < $1.id })
+                self?.pokemonData = pokemon
+            case .failure(let error):
+                print("Fetching pokemon failed with error", error)
+            }
+        }
         PKNetworkManager().fetch(.getPokemon(with: "1")) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
-                let jsonString = String(data: pokeData, encoding: .utf8)
-                print("Jason", jsonString)
                 if let pokemon = try? jsonDecoder.decode(PKPokemonModel.self, from: pokeData) {
                     self?.pokemonData = [pokemon]
                 }

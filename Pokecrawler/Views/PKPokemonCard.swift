@@ -52,9 +52,7 @@ class PKPokemonCard: UIView {
     func populateFields(with pokemon: PKPokemonModel) {
         pokemonNameLabel.text = pokemon.name?.capitalized
         // If the pokemon has no ID, then it is not a pokemon
-        if let pokeID = pokemon.id {
-            pokemonIDLabel.text = String(pokeID)
-        }
+        pokemonIDLabel.text = String(pokemon.id)
     }
     
     func updateImage(with image: UIImage) {

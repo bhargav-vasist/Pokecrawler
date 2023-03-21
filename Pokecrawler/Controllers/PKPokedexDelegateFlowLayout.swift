@@ -13,7 +13,8 @@ class PKPokedexDelegateFlowLayout: NSObject {
     let MAX_ITEMS_PER_ROW = 2.0
     let INTER_ITEM_SPACING = 5.0
     let CELL_ASPECT_RATIO = 1.45
-    let HORIZONTAL_MARGIN = 20.0
+    let HORIZONTAL_MARGIN = 16.0
+    let INTER_LINE_SPACING = 16.0
     
     init(_ viewController: PKPokedexViewController) {
         self.pokedexViewController = viewController
@@ -24,7 +25,7 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let screenWidth = UIScreen.main.bounds.width
-        let cellItemWidth = (screenWidth / MAX_ITEMS_PER_ROW) - ((MAX_ITEMS_PER_ROW * INTER_ITEM_SPACING) + INTER_ITEM_SPACING)
+        let cellItemWidth = (screenWidth / MAX_ITEMS_PER_ROW) - ((MAX_ITEMS_PER_ROW * INTER_ITEM_SPACING) + HORIZONTAL_MARGIN)
         let cellItemHeight = cellItemWidth * CELL_ASPECT_RATIO
         
         return CGSize(width: cellItemWidth, height: cellItemHeight)
@@ -32,6 +33,10 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return INTER_ITEM_SPACING
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return INTER_LINE_SPACING
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

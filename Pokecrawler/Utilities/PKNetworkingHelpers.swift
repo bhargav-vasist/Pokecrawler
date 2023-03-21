@@ -8,6 +8,7 @@
 import Foundation
 
 typealias NetworkHandler = (Result<Data, Error>) -> Void
+typealias NetworkPaginatedHandler = (Result<[Data], Error>) -> Void
 
 enum NetworkingError: String, Error {
     case invalidURL = "Invalid URL"
@@ -28,18 +29,29 @@ protocol NetworkSession {
 
 // Inspired by https://www.swiftbysundell.com/articles/constructing-urls-in-swift/
 struct Endpoint {
-    let path: String
-    let queryItems: [URLQueryItem] = []
+    var path: String
+    var queryItems: [URLQueryItem] = []
 }
 
 extension Endpoint {
+    // Keep it backwards compatible
+    init(from urlString: String) {
+        if let url = URL(string: urlString) {
+            path = url.path
+            if let queryParams = URLComponents(string: urlString)?.queryItems {
+                queryItems = queryParams
+            }
+        } else {
+            path = ""
+        }
+    }
     // We still have to keep 'url' as an optional, since we're
     // dealing with dynamic components that could be invalid.
     var url: URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "pokeapi.co"
-        components.path = "/api/v2" + path
+        components.path = path
         if (!queryItems.isEmpty) {
             components.queryItems = queryItems
         }
@@ -54,11 +66,17 @@ extension Endpoint {
 }
 
 extension Endpoint {
-    static var getAllPokemon: Self {
-        Endpoint(path: "/pokemon")
+    static func getAllPokemon(with offset: Int? = nil) -> Self {
+        var queryItems = [
+            URLQueryItem(name: "limit", value: "10")
+         ]
+        if let offsetValue = offset {
+            queryItems.append(URLQueryItem(name: "offset", value: String(offsetValue)))
+        }
+        return Endpoint(path: "/api/v2" + "/pokemon", queryItems: queryItems)
     }
     
     static func getPokemon(with idOrName: String) -> Self {
-        Endpoint(path: "/pokemon/\(idOrName)")
+        Endpoint(path: "/api/v2" + "/pokemon/\(idOrName)")
     }
 }

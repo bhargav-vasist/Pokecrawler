@@ -12,7 +12,7 @@ class PKNetworkManager {
     private let session: NetworkSession
     
     private let cache = NSCache<NSString, UIImage>()
-
+    
     init(session: NetworkSession = URLSession.shared) {
         self.session = session
     }
@@ -25,6 +25,46 @@ class PKNetworkManager {
                     completionHandler(.success(data))
                 case .failure(let error):
                     print("Failed network request", error)
+                }
+            }
+            request?.resume()
+        } else {
+            completionHandler(.failure(NetworkingError.invalidURL))
+        }
+    }
+    
+    func fetchPaginated(_ endpoint: Endpoint, completionHandler: @escaping NetworkPaginatedHandler) {
+        let dispatchGroup = DispatchGroup()
+        var paginatedArray: [Data] = []
+        
+        if let requestURL = endpoint.url {
+            let request = session.loadData(requestURL) {  result in
+                switch result {
+                case .success(let data):
+                    let decoder = PKPaginatedResponseModel.decoder
+                    if let response = try? decoder.decode(PKPaginatedResponseModel.self, from: data), let results = response.results {
+                        for item in results {
+                            if let itemURL = item.url {
+                                dispatchGroup.enter()
+                                let endpoint = Endpoint(from: itemURL)
+                                self.fetch(endpoint) { result in
+                                    switch result {
+                                    case .success(let itemDetailData):
+                                        paginatedArray.append(itemDetailData)
+                                    case .failure:
+                                        break
+                                    }
+                                    dispatchGroup.leave()
+                                }
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print("Failed network request", error)
+                }
+                
+                dispatchGroup.notify(queue: .main) {
+                    completionHandler(.success(paginatedArray))
                 }
             }
             request?.resume()

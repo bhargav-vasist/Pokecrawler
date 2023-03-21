@@ -18,7 +18,7 @@ class PKPokemonModel: Codable, Hashable {
     }
     
     /// The identifier for this Pokémon resource
-    var id: Int?
+    var id: Int
     
     /// The name for this Pokémon resource
     var name: String?
