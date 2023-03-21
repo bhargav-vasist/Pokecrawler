@@ -30,6 +30,7 @@
 		BEE0936929C9CBA000D304F9 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0936829C9CBA000D304F9 /* UIColorExtensions.swift */; };
 		BEE0936B29C9D14400D304F9 /* PKPokemonCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0936A29C9D14400D304F9 /* PKPokemonCard.swift */; };
 		BEE0936D29C9D65700D304F9 /* PKPaginatedResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0936C29C9D65700D304F9 /* PKPaginatedResponseModel.swift */; };
+		BEE0937129CA45F100D304F9 /* PKPokeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937029CA45F100D304F9 /* PKPokeDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		BEE0936829C9CBA000D304F9 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		BEE0936A29C9D14400D304F9 /* PKPokemonCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonCard.swift; sourceTree = "<group>"; };
 		BEE0936C29C9D65700D304F9 /* PKPaginatedResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPaginatedResponseModel.swift; sourceTree = "<group>"; };
+		BEE0937029CA45F100D304F9 /* PKPokeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,9 +171,8 @@
 		BEE0934F29C8F7CB00D304F9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BEE0931A29C8F5C900D304F9 /* PKPokedexViewController.swift */,
-				BEE0935829C9B20600D304F9 /* PKPokedexDataSource.swift */,
-				BEE0935A29C9B23500D304F9 /* PKPokedexDelegateFlowLayout.swift */,
+				BEE0936F29CA45DC00D304F9 /* PokeDetails */,
+				BEE0936E29CA45D300D304F9 /* Pokedex */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -215,6 +216,24 @@
 				BEE0936A29C9D14400D304F9 /* PKPokemonCard.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BEE0936E29CA45D300D304F9 /* Pokedex */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0931A29C8F5C900D304F9 /* PKPokedexViewController.swift */,
+				BEE0935829C9B20600D304F9 /* PKPokedexDataSource.swift */,
+				BEE0935A29C9B23500D304F9 /* PKPokedexDelegateFlowLayout.swift */,
+			);
+			path = Pokedex;
+			sourceTree = "<group>";
+		};
+		BEE0936F29CA45DC00D304F9 /* PokeDetails */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0937029CA45F100D304F9 /* PKPokeDetailViewController.swift */,
+			);
+			path = PokeDetails;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,6 +378,7 @@
 				BEE0931929C8F5C900D304F9 /* SceneDelegate.swift in Sources */,
 				BEE0934B29C8F7A900D304F9 /* PKNetworkingExtensions.swift in Sources */,
 				BEE0934929C8F79A00D304F9 /* PKStorageManager.swift in Sources */,
+				BEE0937129CA45F100D304F9 /* PKPokeDetailViewController.swift in Sources */,
 				BEE0936129C9B83E00D304F9 /* PKSecondaryTitleLabel.swift in Sources */,
 				BEE0936D29C9D65700D304F9 /* PKPaginatedResponseModel.swift in Sources */,
 				BEE0935329C8F7F000D304F9 /* PKPokemonModel.swift in Sources */,
