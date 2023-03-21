@@ -9,10 +9,13 @@ import Foundation
 
 typealias NetworkHandler = (Result<Data, Error>) -> Void
 
-enum NetworkingError: Error {
-    case invalidURL
-    case serverError(String)
-    case invalidServerResponse
+enum NetworkingError: String, Error {
+    case invalidURL = "Invalid URL"
+    case invalidServerResponse = "Invalid response from the server. Make sure the username requested is entered is correctly and try again."
+    case serverError = "Unable to complete your request due to a server error. Please bear with us while we fix this."
+    case clientError = "Unable to complete your request due to a client error. Please check your internet connection and try again."
+    case dataError = "Invalid data recieved from the server. This should not have happened. Please bear with us while we fix this problem"
+    case decodeError = "The JSON data could not be decoded correctly for its model type."
 }
 
 protocol NetworkSession {
@@ -46,7 +49,6 @@ extension Endpoint {
                 "Invalid URL components: \(components)"
             )
         }
-        print("components", components)
         return url
     }
 }

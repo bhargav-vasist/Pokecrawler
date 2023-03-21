@@ -21,7 +21,7 @@ class PKSecondaryTitleLabel: UILabel {
     
     private func configure(fontSize: CGFloat, text: String) {
         self.text = text
-        font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        font = UIFont.preferredFont(forTextStyle: .title2)
         textColor = .secondaryLabel
         textAlignment = .left
         lineBreakMode = .byTruncatingTail

@@ -12,7 +12,7 @@ class PKPokedexViewController: UIViewController {
     var pokedexDataSource: PKPokedexDataSource!
         
     var collectionView: UICollectionView!
-    lazy var delegateFlowLayout = PKPokedexFlowLayout(self)
+    lazy var delegateFlowLayout = PKPokedexDelegateFlowLayout(self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,18 +33,20 @@ class PKPokedexViewController: UIViewController {
     private func configureNavigation() {
         view.backgroundColor = .lightText
         navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setNavigationBarHidden(false, animated: true)
+        title = "Pokedex"
     }
     
     private func configureDataSource() {
-        PKNetworkManager().fetch(.getPokemon(with: "1")) { result in
-            switch result {
-            case .success(let pokeData):
-                print("Data received", pokeData)
-            case .failure(let error):
-                print("Fetching pokemon failed with error", error)
+        pokedexDataSource = PKPokedexDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, pokemon in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier, for: indexPath) as? PKPokemonCollectionViewCell else {
+                fatalError("Failed to dequeue reusable PKPokemonCollectionViewCell")
             }
-        }
+            cell.set(pokemon: pokemon)
+            return cell
+        })
+        pokedexDataSource.fetchPokeData()
     }
 }
 
