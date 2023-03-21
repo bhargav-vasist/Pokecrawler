@@ -19,25 +19,37 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
         }
     }
     var hasMorePokemon = true
+    var currentFetchOffset = 0
+    var FETCH_LIMIT = 10
     
     func fetchPokeData() {
-        PKNetworkManager().fetchPaginated(.getAllPokemon()) { [weak self] result in
+        PKNetworkManager().fetchPaginated(.getAllPokemon(with: FETCH_LIMIT)) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
                 let pokemon = pokeData.compactMap({ try? jsonDecoder.decode(PKPokemonModel.self, from: $0)}).sorted(by: { $0.id < $1.id })
-                self?.pokemonData = pokemon
+                guard let unwrappedSelf = self else {
+                    return
+                }
+                unwrappedSelf.currentFetchOffset += unwrappedSelf.FETCH_LIMIT
+                unwrappedSelf.pokemonData = pokemon
             case .failure(let error):
                 print("Fetching pokemon failed with error", error)
             }
         }
-        PKNetworkManager().fetch(.getPokemon(with: "1")) { [weak self] result in
+    }
+    
+    func fetchEvenMorePokeData() {
+        PKNetworkManager().fetchPaginated(.getAllPokemon(with: FETCH_LIMIT, and: currentFetchOffset)) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
-                if let pokemon = try? jsonDecoder.decode(PKPokemonModel.self, from: pokeData) {
-                    self?.pokemonData = [pokemon]
+                let extraPokemon = pokeData.compactMap({ try? jsonDecoder.decode(PKPokemonModel.self, from: $0)}).sorted(by: { $0.id < $1.id })
+                guard let unwrappedSelf = self else {
+                    return
                 }
+                unwrappedSelf.currentFetchOffset += unwrappedSelf.FETCH_LIMIT
+                unwrappedSelf.pokemonData.append(contentsOf: extraPokemon)
             case .failure(let error):
                 print("Fetching pokemon failed with error", error)
             }
