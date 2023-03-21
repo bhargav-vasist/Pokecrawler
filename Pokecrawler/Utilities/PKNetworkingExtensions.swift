@@ -29,7 +29,8 @@ extension URLSession: NetworkSession {
         
         let task = dataTask(with: url) { data, _, error in
             if let error = error {
-                handler(.failure(NetworkingError.serverError(error.localizedDescription)))
+                print("Error loading data", error.localizedDescription)
+                handler(.failure(NetworkingError.serverError))
             } else if let data = data {
                 handler(.success(data))
             } else {

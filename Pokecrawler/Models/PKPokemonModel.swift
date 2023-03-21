@@ -18,7 +18,7 @@ class PKPokemonModel: Codable, Hashable {
     }
     
     /// The identifier for this Pokémon resource
-    var id: Int?
+    var id: Int
     
     /// The name for this Pokémon resource
     var name: String?
@@ -76,9 +76,6 @@ class PKPokemonModel: Codable, Hashable {
 }
 
 class PKPokemonSprite: Codable {
-//    static func == (lhs: PKPokemonSprite, rhs: PKPokemonSprite) -> Bool {
-//        lhs.frontDefault == rhs.frontDefault
-//    }
     
     /// The default depiction of this Pokémon from the front in battle
     var frontDefault: String?
@@ -103,6 +100,57 @@ class PKPokemonSprite: Codable {
     
     /// The shiny female depiction of this Pokémon from the back in battle
     var backShinyFemale: String?
+    
+    /// Misc data
+    var other: PKPokemonOther?
+    
+    static var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+}
+
+class PKPokemonOther: Codable {
+    /// Art for dream world sequences
+    var dreamWorld: PKPokemonDreamWorld?
+    
+    /// Art for Home Screen viewing
+    var home: PKPokemonHome?
+    
+    static var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+}
+
+class PKPokemonHome: Codable {
+    /// The default depiction of this Pokémon from the front in battle
+    var frontDefault: String?
+    
+    /// The shiny depiction of this Pokémon from the front in battle
+    var frontShiny: String?
+    
+    /// The female depiction of this Pokémon from the front in battle
+    var frontFemale: String?
+    
+    /// The shiny female depiction of this Pokémon from the front
+    var frontShinyFemale: String?
+    
+    static var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+}
+
+class PKPokemonDreamWorld: Codable {
+    /// The default depiction of this Pokémon from the front in battle
+    var frontDefault: String?
+
+    /// The female depiction of this Pokémon from the front in battle
+    var frontFemale: String?
     
     static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
