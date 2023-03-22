@@ -34,7 +34,9 @@
 		BEE0937329CA5B4000D304F9 /* PKPokemonTypeStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937229CA5B4000D304F9 /* PKPokemonTypeStackView.swift */; };
 		BEE0937529CA5BB700D304F9 /* PKPokemonTypeChipLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937429CA5BB700D304F9 /* PKPokemonTypeChipLabel.swift */; };
 		BEE0937729CA5BF400D304F9 /* PKPokemonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937629CA5BF400D304F9 /* PKPokemonType.swift */; };
-		BEE0937929CB29E300D304F9 /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937829CB29E300D304F9 /* UINavigationBarExtension.swift */; };
+		BEE0937B29CB3CD000D304F9 /* PKPokemonStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937A29CB3CD000D304F9 /* PKPokemonStats.swift */; };
+		BEE0937D29CB428500D304F9 /* PKPokeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937C29CB428500D304F9 /* PKPokeDetailView.swift */; };
+		BEE0937F29CB465F00D304F9 /* PKPokeDetailAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937E29CB465F00D304F9 /* PKPokeDetailAboutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,7 +88,9 @@
 		BEE0937229CA5B4000D304F9 /* PKPokemonTypeStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonTypeStackView.swift; sourceTree = "<group>"; };
 		BEE0937429CA5BB700D304F9 /* PKPokemonTypeChipLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonTypeChipLabel.swift; sourceTree = "<group>"; };
 		BEE0937629CA5BF400D304F9 /* PKPokemonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonType.swift; sourceTree = "<group>"; };
-		BEE0937829CB29E300D304F9 /* UINavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarExtension.swift; sourceTree = "<group>"; };
+		BEE0937A29CB3CD000D304F9 /* PKPokemonStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonStats.swift; sourceTree = "<group>"; };
+		BEE0937C29CB428500D304F9 /* PKPokeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailView.swift; sourceTree = "<group>"; };
+		BEE0937E29CB465F00D304F9 /* PKPokeDetailAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailAboutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +204,6 @@
 				BEE0934A29C8F7A900D304F9 /* PKNetworkingExtensions.swift */,
 				BEE0934C29C8F7B200D304F9 /* PKNetworkingHelpers.swift */,
 				BEE0936829C9CBA000D304F9 /* UIColorExtensions.swift */,
-				BEE0937829CB29E300D304F9 /* UINavigationBarExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				BEE0935229C8F7F000D304F9 /* PKPokemonModel.swift */,
 				BEE0936C29C9D65700D304F9 /* PKPaginatedResponseModel.swift */,
 				BEE0937629CA5BF400D304F9 /* PKPokemonType.swift */,
+				BEE0937A29CB3CD000D304F9 /* PKPokemonStats.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -244,6 +248,8 @@
 			isa = PBXGroup;
 			children = (
 				BEE0937029CA45F100D304F9 /* PKPokeDetailViewController.swift */,
+				BEE0937C29CB428500D304F9 /* PKPokeDetailView.swift */,
+				BEE0937E29CB465F00D304F9 /* PKPokeDetailAboutView.swift */,
 			);
 			path = PokeDetails;
 			sourceTree = "<group>";
@@ -379,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEE0931B29C8F5C900D304F9 /* PKPokedexViewController.swift in Sources */,
+				BEE0937D29CB428500D304F9 /* PKPokeDetailView.swift in Sources */,
 				BEE0936529C9BEA800D304F9 /* PKVertStackView.swift in Sources */,
 				BEE0937729CA5BF400D304F9 /* PKPokemonType.swift in Sources */,
 				BEE0937329CA5B4000D304F9 /* PKPokemonTypeStackView.swift in Sources */,
@@ -388,15 +395,16 @@
 				BEE0934D29C8F7B200D304F9 /* PKNetworkingHelpers.swift in Sources */,
 				BEE0934729C8F78E00D304F9 /* PKNetworkManager.swift in Sources */,
 				BEE0935B29C9B23500D304F9 /* PKPokedexDelegateFlowLayout.swift in Sources */,
+				BEE0937B29CB3CD000D304F9 /* PKPokemonStats.swift in Sources */,
 				BEE0936329C9BD4B00D304F9 /* PKPokeSpriteImageView.swift in Sources */,
 				BEE0931729C8F5C900D304F9 /* AppDelegate.swift in Sources */,
 				BEE0931929C8F5C900D304F9 /* SceneDelegate.swift in Sources */,
 				BEE0934B29C8F7A900D304F9 /* PKNetworkingExtensions.swift in Sources */,
 				BEE0934929C8F79A00D304F9 /* PKStorageManager.swift in Sources */,
 				BEE0937129CA45F100D304F9 /* PKPokeDetailViewController.swift in Sources */,
-				BEE0937929CB29E300D304F9 /* UINavigationBarExtension.swift in Sources */,
 				BEE0936129C9B83E00D304F9 /* PKSecondaryTitleLabel.swift in Sources */,
 				BEE0936D29C9D65700D304F9 /* PKPaginatedResponseModel.swift in Sources */,
+				BEE0937F29CB465F00D304F9 /* PKPokeDetailAboutView.swift in Sources */,
 				BEE0935329C8F7F000D304F9 /* PKPokemonModel.swift in Sources */,
 				BEE0935D29C9B7CB00D304F9 /* PKPokemonCollectionViewCell.swift in Sources */,
 				BEE0935929C9B20600D304F9 /* PKPokedexDataSource.swift in Sources */,
