@@ -21,13 +21,13 @@ class PKPokemonModel: Codable, Hashable {
     var id: Int
     
     /// The name for this Pokémon resource
-    var name: String?
+    var name: String
     
     /// The base experience gained for defeating this Pokémon
-    var baseExperience: Int?
+    var baseExperience: Int
     
     /// The height of this Pokémon
-    var height: Int?
+    var height: Int
     
     /// Set for exactly one Pokémon used as the default for each species
     var isDefault: Bool?
@@ -57,7 +57,7 @@ class PKPokemonModel: Codable, Hashable {
     //    var moves: [PKMPokemonMove]?
     
     /// A set of sprites used to depict this Pokémon in the game
-    var sprites: PKPokemonSprite?
+    var sprites: PKPokemonSprite
     
     /// The species this Pokémon belongs to
     //    var species: PKMNamedAPIResource<PKMPokemonSpecies>?
@@ -66,7 +66,7 @@ class PKPokemonModel: Codable, Hashable {
     //    var stats: [PKMPokemonStat]?
     
     /// A list of details showing types this Pokémon has
-    //    var types: [PKMPokemonType]?
+        var types: [PKPokemonSpeciesType]
     
     static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()

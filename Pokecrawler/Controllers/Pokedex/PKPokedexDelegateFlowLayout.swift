@@ -48,6 +48,7 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
             fatalError("Critical data for Pokemon Cell not found! This should not happen")
         }
         print("You have selected", pokemon.name)
+        pokedexViewController?.navigationController?.pushViewController(PKPokeDetailViewController(pokemonData: pokemon), animated: true)
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
