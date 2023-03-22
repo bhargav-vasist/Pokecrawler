@@ -33,30 +33,24 @@ class PKPokeDetailViewController: UIViewController {
         return iv
     }()
     
-    lazy private var detailView: UIView = {
-        let view = UIView()
+    lazy private var detailView: PKPokeDetailView = {
+        let view = PKPokeDetailView(with: pokemonModel)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 24
         scrollView.addSubview(view)
         return view
     }()
     
-    lazy private var typeStack: PKPokemonTypeStackView = {
-        let sv = PKPokemonTypeStackView(with: pokemonModel.types)
-        detailView.addSubview(sv)
-        return sv
-    }()
-    
     private var imageLoadingTask: URLSessionDataTask?
+    private var networkManager: PKNetworkManager!
     
     private var headerTopConstraint: NSLayoutConstraint!
     private var headerHeightConstraint: NSLayoutConstraint!
     fileprivate let headerHeight: CGFloat = 250
     
-    init(pokemonData: PKPokemonModel) {
+    init(with pokemonData: PKPokemonModel, and networkManager: PKNetworkManager) {
         super.init(nibName: nil, bundle: nil)
-        pokemonModel = pokemonData
+        self.pokemonModel = pokemonData
+        self.networkManager = networkManager
     }
     
     required init?(coder: NSCoder) {
@@ -112,10 +106,6 @@ class PKPokeDetailViewController: UIViewController {
             detailView.topAnchor.constraint(equalTo: headerContainerView.bottomAnchor),
             detailView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0),
             detailView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor),
-            
-            typeStack.topAnchor.constraint(equalTo: detailView.safeAreaLayoutGuide.topAnchor, constant: 12),
-            typeStack.leadingAnchor.constraint(equalTo: detailView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            typeStack.heightAnchor.constraint(equalToConstant: 35),
         ])
     }
     
@@ -125,7 +115,7 @@ class PKPokeDetailViewController: UIViewController {
     
     private func fetchAndUpdatePokemonImage() {
         if let pokeSprite = pokemonModel.sprites.other?.home?.frontDefault {
-            imageLoadingTask = PKNetworkManager().getAvatarImage(urlString: pokeSprite) { [weak self] result in
+            imageLoadingTask = networkManager.getAvatarImage(urlString: pokeSprite) { [weak self] result in
                 switch result {
                 case .failure:
                     break
@@ -164,7 +154,6 @@ extension PKPokeDetailViewController: UIScrollViewDelegate {
                 headerHeight - scrollView.contentOffset.y
             pokeSpriteImageView.layer.contentsRect =
                 CGRect(x: 0, y: -contentRectOffsetY, width: 1, height: 1)
-            typeStack.layer.contentsRect = CGRect(x: 0, y: -contentRectOffsetY, width: 1, height: 1)
         }
     }
 }
