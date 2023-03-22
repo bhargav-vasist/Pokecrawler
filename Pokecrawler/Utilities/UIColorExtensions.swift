@@ -113,4 +113,20 @@ extension UIColor {
     }
 
     // swiftlint:enable type_body_length
+    enum PokeColors {
+        public static let darkBrown = UIColor(hex: 0x705848)!
+        
+        public static let lightBrown = UIColor(hex: 0xB8A038)!
+        
+        public static let beigeRegret = UIColor(hex: 0xA8A878)!
+        
+        public static let hotPink = UIColor(hex: 0xF85888)!
+
+        public static let lightPink = UIColor(hex: 0xEE99AC)!
+        
+        public static let twitchPurple = UIColor(hex: 0x7038F8)!
+
+        public static let grapePurple = UIColor(hex: 0x705898)!
+
+    }
 }

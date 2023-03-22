@@ -36,7 +36,6 @@ class PKPokemonCard: UIView {
     private func configure() {
         addSubview(mainView)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .FlatUI.emerald
         layer.cornerRadius = 16.0
         clipsToBounds = true
         
@@ -50,9 +49,10 @@ class PKPokemonCard: UIView {
     }
     
     func populateFields(with pokemon: PKPokemonModel) {
-        pokemonNameLabel.text = pokemon.name?.capitalized
+        pokemonNameLabel.text = pokemon.name.capitalized
         // If the pokemon has no ID, then it is not a pokemon
         pokemonIDLabel.text = "#" + String(pokemon.id)
+        backgroundColor = pokemon.types.first?.type.name.getColorForType()
     }
     
     func updateImage(with image: UIImage) {

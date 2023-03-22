@@ -30,7 +30,7 @@ class PKPokemonCollectionViewCell: UICollectionViewCell {
     
     func set(pokemon: PKPokemonModel) {
         pokeCardView.populateFields(with: pokemon)
-        if let pokeSprite = pokemon.sprites?.other?.home?.frontDefault {
+        if let pokeSprite = pokemon.sprites.other?.home?.frontDefault {
             imageLoadingTask = PKNetworkManager().getAvatarImage(urlString: pokeSprite) { [weak self] result in
                 switch result {
                 case .failure:
