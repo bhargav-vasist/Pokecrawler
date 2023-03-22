@@ -13,17 +13,31 @@ enum PokeSections {
 
 class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPokemonModel> {
     
+    private var networkManager: PKNetworkManager!
+    
     var pokemonData: [PKPokemonModel] = [] {
         didSet {
             updateDataSource(with: pokemonData)
         }
     }
+    
+    // Check the API returned value to see if paginated calls are to be made
     var hasMorePokemon = true
+    
+    // Offset of the items already fetched
     var currentFetchOffset = 0
+    
+    // No of items to fetch per call
     var FETCH_LIMIT = 10
     
+    init(with networkManager: PKNetworkManager, for collectionView: UICollectionView, and cellProvider: @escaping UICollectionViewDiffableDataSource<PokeSections, PKPokemonModel>.CellProvider) {
+        super.init(collectionView: collectionView, cellProvider: cellProvider)
+        self.networkManager = networkManager
+    }
+    
+    // Called the first time every load.
     func fetchPokeData() {
-        PKNetworkManager().fetchPaginated(.getAllPokemon(with: FETCH_LIMIT)) { [weak self] result in
+        networkManager.fetchPaginated(.getAllPokemon(with: FETCH_LIMIT)) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
@@ -39,8 +53,9 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
         }
     }
     
+    // Paginated calls to fetch more pokemon.
     func fetchEvenMorePokeData() {
-        PKNetworkManager().fetchPaginated(.getAllPokemon(with: FETCH_LIMIT, and: currentFetchOffset)) { [weak self] result in
+        networkManager.fetchPaginated(.getAllPokemon(with: FETCH_LIMIT, and: currentFetchOffset)) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
@@ -56,6 +71,7 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
         }
     }
     
+    // Apply the new snapshot which includes additional items or filtered items (in the future)
     func updateDataSource(with pokemonData: [PKPokemonModel]) {
         var snapshot = NSDiffableDataSourceSnapshot<PokeSections, PKPokemonModel>()
         snapshot.appendSections([.main])

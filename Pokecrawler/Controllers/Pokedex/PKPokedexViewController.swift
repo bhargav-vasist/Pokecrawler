@@ -10,9 +10,20 @@ import UIKit
 class PKPokedexViewController: UIViewController {
     
     var pokedexDataSource: PKPokedexDataSource!
-        
+    
     var collectionView: UICollectionView!
     lazy var delegateFlowLayout = PKPokedexDelegateFlowLayout(self)
+    
+    private var networkManager: PKNetworkManager!
+    
+    init(with networkManager: PKNetworkManager) {
+        super.init(nibName: nil, bundle: nil)
+        self.networkManager = networkManager
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +32,7 @@ class PKPokedexViewController: UIViewController {
         configureCollectionView()
         configureDataSource()
     }
-
+    
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .systemBackground
@@ -39,7 +50,7 @@ class PKPokedexViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        pokedexDataSource = PKPokedexDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, pokemon in
+        pokedexDataSource = PKPokedexDataSource(with: PKNetworkManager(), for: collectionView, and: { collectionView, indexPath, pokemon in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier, for: indexPath) as? PKPokemonCollectionViewCell else {
                 fatalError("Failed to dequeue reusable PKPokemonCollectionViewCell")
             }
