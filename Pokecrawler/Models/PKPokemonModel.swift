@@ -63,7 +63,7 @@ class PKPokemonModel: Codable, Hashable {
     //    var species: PKMNamedAPIResource<PKMPokemonSpecies>?
     
     /// A list of base stat values for this Pokémon
-    //    var stats: [PKMPokemonStat]?
+        var stats: [PKPokeStat]
     
     /// A list of details showing types this Pokémon has
         var types: [PKPokemonSpeciesType]
