@@ -84,4 +84,8 @@ extension Endpoint {
     static func getPokemonSpecies(with idOrName: String) -> Self {
         Endpoint(path: "/api/v2" + "/pokemon-species/\(idOrName)")
     }
+    
+    static func getPokemonStats(with idOrName: String) -> Self {
+        Endpoint(path: "/api/v2" + "/stat/\(idOrName)")
+    }
 }
