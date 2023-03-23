@@ -7,8 +7,27 @@
 
 import Foundation
 
+/// Pokemon Stat
+class PKPokemonStat: Codable {
+    
+    /// The stat the Pokémon has
+    var stat: PKMNamedAPIResource<PKPokemonBaseStat>?
+    
+    /// The effort points (EV) the Pokémon has in the stat
+    var effort: Int?
+    
+    /// The base value of the stat
+    var baseStat: Int?
+    
+    public static var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+}
+
 /// Stats determine certain aspects of battles. Each Pokémon has a value for each stat which grows as they gain levels and can be altered momentarily by effects in battles.
-class PKPokeStat: Codable {
+class PKPokeFullStat: Codable {
     
     /// The identifier for this stat resource
     var id: Int
@@ -53,17 +72,6 @@ enum PKPokemonBaseStat: String, Codable {
     case speed
     case accuracy
     case evasion
-    
-    enum CodingKeys: String, CodingKey {
-        case hp
-        case attack
-        case defense
-        case specialAttack = "special-attack"
-        case specialDefense = "special-defense"
-        case speed
-        case accuracy
-        case evasion
-    }
     
     func getMaxValue() -> Int {
         switch self {
