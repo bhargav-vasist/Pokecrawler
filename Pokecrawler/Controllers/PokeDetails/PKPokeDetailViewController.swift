@@ -10,6 +10,13 @@ import UIKit
 class PKPokeDetailViewController: UIViewController {
     
     private var pokemonModel: PKPokemonModel!
+    private var pokemonSpecies: PKPokemonSpecies? {
+        didSet {
+            if let species = pokemonSpecies {
+                detailView.loadViews(with: species)
+            }
+        }
+    }
     
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -75,10 +82,18 @@ class PKPokeDetailViewController: UIViewController {
     private func configureNavigation() {
         title = pokemonModel.name.capitalized
         
-        navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
-        navigationController?.navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.standardAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.tintColor = .white
+//        navigationItem.standardAppearance
+        navigationItem.standardAppearance?.backgroundColor = .clear
+        navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance?.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationItem.titleView?.tintColor = .white
+        
+        navigationController?.navigationItem.titleView?.tintColor = .white
+        
+//        navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
+//        navigationController?.navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.standardAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.tintColor = .white
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(favoriteTapped))
     }
@@ -89,7 +104,7 @@ class PKPokeDetailViewController: UIViewController {
         headerTopConstraint = headerContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         headerHeightConstraint = headerContainerView.heightAnchor.constraint(equalToConstant: headerHeight)
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -105,12 +120,14 @@ class PKPokeDetailViewController: UIViewController {
             
             detailView.topAnchor.constraint(equalTo: headerContainerView.bottomAnchor),
             detailView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0),
-            detailView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 600),
         ])
     }
     
     private func configureViews() {
         fetchAndUpdatePokemonImage()
+        fetchPokeSpeciesData()
+        fetchPokeStatsData()
     }
     
     private func fetchAndUpdatePokemonImage() {
@@ -129,6 +146,32 @@ class PKPokeDetailViewController: UIViewController {
         
     }
     
+    private func fetchPokeSpeciesData() {
+        guard let speciesURL = pokemonModel.species.url else {
+            print("Pokemon \(pokemonModel.name) does not have Species URL listed")
+            return
+        }
+        networkManager.fetch(Endpoint(from: speciesURL)) { [weak self] result in
+            switch (result) {
+            case .success(let speciesData):
+                let decoder = PKPokemonSpecies.decoder
+                if let species = try? decoder.decode(PKPokemonSpecies.self, from: speciesData) {
+                    print("Species found", species)
+                    self?.pokemonSpecies = species
+                }
+            case .failure(let error):
+                print("Errored fetching Species Data", error)
+            }
+        }
+    }
+    
+    private func fetchPokeStatsData() {
+        guard let speciesURL = pokemonModel.species.url else {
+            print("Pokemon \(pokemonModel.name) does not have Species URL listed")
+            return
+        }
+    }
+    
     @objc private func favoriteTapped() {
         isFavorited.toggle()
         // TODO: - Add to persistence layer
@@ -144,7 +187,7 @@ extension PKPokeDetailViewController: UIScrollViewDelegate {
         }
         else {
             // Scrolling up: Parallax
-            let parallaxFactor: CGFloat = 0.35
+            let parallaxFactor: CGFloat = 0.15
             let offsetY = scrollView.contentOffset.y * parallaxFactor
             let minOffsetY: CGFloat = 8.0
             let availableOffset = min(offsetY, minOffsetY)

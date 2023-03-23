@@ -11,13 +11,13 @@ import Foundation
 class PKPokemonStat: Codable {
     
     /// The stat the Pokémon has
-    var stat: PKMNamedAPIResource<PKPokemonBaseStat>?
+    var stat: PKMNamedAPIResource<String>
     
     /// The effort points (EV) the Pokémon has in the stat
     var effort: Int?
     
     /// The base value of the stat
-    var baseStat: Int?
+    var baseStat: Int
     
     public static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -72,6 +72,27 @@ enum PKPokemonBaseStat: String, Codable {
     case speed
     case accuracy
     case evasion
+    
+    func getDisplayName() -> String {
+        switch self {
+        case .hp:
+            return "HP"
+        case .attack:
+            return "ATK"
+        case .defense:
+            return "DEF"
+        case .specialAttack:
+            return "SP ATK"
+        case .specialDefense:
+            return "SP DEF"
+        case .speed:
+            return "SPD"
+        case .accuracy:
+            return "ACC"
+        case .evasion:
+            return "EVS"
+        }
+    }
     
     func getMaxValue() -> Int {
         switch self {

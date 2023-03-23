@@ -9,7 +9,7 @@ import UIKit
 
 class PKPokemonCard: UIView {
     let pokeSpriteImageView = PKPokeSpriteImageView()
-    let pokemonNameLabel = PKPrimaryTitleLabel(text: "")
+    let pokemonNameLabel = PKHeadingLabel(text: "")
     let pokemonIDLabel = PKSecondaryTitleLabel(fontSize: 18, text: "")
     
     lazy var mainView: UIView = {
