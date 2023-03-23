@@ -14,12 +14,42 @@ class PKPokemonSpeciesType: Codable {
     var slot: Int?
     
     /// The type the referenced Pokémon has
-    var type: PKPokemonAPIType
+    var type: PKMNamedAPIResource<PKPokemonBaseType>
 }
 
-struct PKPokemonAPIType: Codable {
-    var name: PKPokemonBaseType
-    var url: String
+/// API Referenced Resource
+class PKAPIResource<T>: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case url
+    }
+    
+    /// The URL of the referenced resource
+    var url: String?
+    
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.url = try container.decode(String.self, forKey: .url)
+    }
+}
+
+
+/// Named API Resource
+class PKMNamedAPIResource<T: Codable>: PKAPIResource<T> {
+    private enum CodingKeys: String, CodingKey {
+        case name
+    }
+    
+    /// The name of the referenced resource
+    var name: T
+    
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(T.self, forKey: .name)
+        
+        try super.init(from: decoder)
+    }
 }
 
 enum PKPokemonBaseType: String, Codable {

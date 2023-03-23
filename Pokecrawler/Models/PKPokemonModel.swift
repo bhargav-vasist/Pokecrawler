@@ -44,12 +44,6 @@ class PKPokemonModel: Codable, Hashable {
     /// A list of forms this Pokémon can take on
     //    var forms: [PKMNamedAPIResource<PKMPokemonForm>]?
     
-    /// A list of game indices relevent to Pokémon item by generation
-    //    var gameIndices: [PKMVersionGameIndex]?
-    
-    /// A list of items this Pokémon may be holding when encountered
-    //    var heldItems: [PKMPokemonHeldItem]?
-    
     /// A list of location areas as well as encounter details pertaining to specific versions
     var locationAreaEncounters: String?
     
@@ -60,13 +54,13 @@ class PKPokemonModel: Codable, Hashable {
     var sprites: PKPokemonSprite
     
     /// The species this Pokémon belongs to
-    //    var species: PKMNamedAPIResource<PKMPokemonSpecies>?
+    var species: PKMNamedAPIResource<String>
     
     /// A list of base stat values for this Pokémon
-        var stats: [PKPokeStat]
+    var stats: [PKPokemonStat]?
     
     /// A list of details showing types this Pokémon has
-        var types: [PKPokemonSpeciesType]
+    var types: [PKPokemonSpeciesType]
     
     static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -148,7 +142,7 @@ class PKPokemonHome: Codable {
 class PKPokemonDreamWorld: Codable {
     /// The default depiction of this Pokémon from the front in battle
     var frontDefault: String?
-
+    
     /// The female depiction of this Pokémon from the front in battle
     var frontFemale: String?
     

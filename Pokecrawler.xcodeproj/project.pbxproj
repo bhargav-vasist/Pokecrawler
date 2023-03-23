@@ -37,6 +37,7 @@
 		BEE0937B29CB3CD000D304F9 /* PKPokemonStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937A29CB3CD000D304F9 /* PKPokemonStats.swift */; };
 		BEE0937D29CB428500D304F9 /* PKPokeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937C29CB428500D304F9 /* PKPokeDetailView.swift */; };
 		BEE0937F29CB465F00D304F9 /* PKPokeDetailAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0937E29CB465F00D304F9 /* PKPokeDetailAboutView.swift */; };
+		BEE0938129CC80BF00D304F9 /* PKPokemonSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0938029CC80BF00D304F9 /* PKPokemonSpecies.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		BEE0937A29CB3CD000D304F9 /* PKPokemonStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonStats.swift; sourceTree = "<group>"; };
 		BEE0937C29CB428500D304F9 /* PKPokeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailView.swift; sourceTree = "<group>"; };
 		BEE0937E29CB465F00D304F9 /* PKPokeDetailAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailAboutView.swift; sourceTree = "<group>"; };
+		BEE0938029CC80BF00D304F9 /* PKPokemonSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokemonSpecies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +217,7 @@
 				BEE0936C29C9D65700D304F9 /* PKPaginatedResponseModel.swift */,
 				BEE0937629CA5BF400D304F9 /* PKPokemonType.swift */,
 				BEE0937A29CB3CD000D304F9 /* PKPokemonStats.swift */,
+				BEE0938029CC80BF00D304F9 /* PKPokemonSpecies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				BEE0936329C9BD4B00D304F9 /* PKPokeSpriteImageView.swift in Sources */,
 				BEE0931729C8F5C900D304F9 /* AppDelegate.swift in Sources */,
 				BEE0931929C8F5C900D304F9 /* SceneDelegate.swift in Sources */,
+				BEE0938129CC80BF00D304F9 /* PKPokemonSpecies.swift in Sources */,
 				BEE0934B29C8F7A900D304F9 /* PKNetworkingExtensions.swift in Sources */,
 				BEE0934929C8F79A00D304F9 /* PKStorageManager.swift in Sources */,
 				BEE0937129CA45F100D304F9 /* PKPokeDetailViewController.swift in Sources */,
