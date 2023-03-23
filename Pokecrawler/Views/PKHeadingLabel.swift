@@ -1,13 +1,15 @@
 //
-//  PKPrimaryTitleLabel.swift
+//  PKHeadingLabel.swift
 //  Pokecrawler
 //
-//  Created by Bhargav Vasist on 21/03/23.
+//  Created by Bhargav Vasist on 23/03/23.
 //
+
+import Foundation
 
 import UIKit
 
-class PKPrimaryTitleLabel: UILabel {
+class PKHeadingLabel: UILabel {
     
     init(text: String) {
         super.init(frame: .zero)
@@ -20,7 +22,7 @@ class PKPrimaryTitleLabel: UILabel {
     
     private func configure(text: String) {
         self.text = text
-        font = UIFont.preferredFont(forTextStyle: .body)
+        font = UIFont.preferredFont(forTextStyle: .title1)
         textAlignment = .center
         textColor = .label
         translatesAutoresizingMaskIntoConstraints = false

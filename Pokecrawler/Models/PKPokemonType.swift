@@ -18,7 +18,7 @@ class PKPokemonSpeciesType: Codable {
 }
 
 /// API Referenced Resource
-class PKAPIResource<T>: Codable {
+class PKAPIResource: Codable {
     private enum CodingKeys: String, CodingKey {
         case url
     }
@@ -35,7 +35,7 @@ class PKAPIResource<T>: Codable {
 
 
 /// Named API Resource
-class PKMNamedAPIResource<T: Codable>: PKAPIResource<T> {
+class PKMNamedAPIResource<T: Codable>: PKAPIResource {
     private enum CodingKeys: String, CodingKey {
         case name
     }

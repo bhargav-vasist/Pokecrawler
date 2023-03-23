@@ -12,24 +12,56 @@ class PKPokeDetailView: UIView {
     enum PKPokeDetailTabs: String, CaseIterable {
         case about
         case stats
-        case forms
+        //        case forms
     }
     
     private var pokemonModel: PKPokemonModel! {
         didSet {
-            populateViewsWithData()
+            DispatchQueue.main.async {
+                self.populateViewsWithData()
+            }
         }
     }
     
-    lazy private var typeStack: PKPokemonTypeStackView = {
-        let sv = PKPokemonTypeStackView(with: pokemonModel.types)
-        addSubview(sv)
-        return sv
-    }()
+    private var pokemonSpecies: PKPokemonSpecies? {
+        didSet {
+            if pokemonSpecies != nil {
+                DispatchQueue.main.async {
+                    self.populateViewsWithData()
+                }
+            }
+        }
+    }
     
     lazy private var segmentedDetails: UISegmentedControl = {
-        let segCtrl = UISegmentedControl(items: PKPokeDetailTabs.allCases)
+        let segmentNames = PKPokeDetailTabs.allCases.map {$0.rawValue.capitalized}
+        let segCtrl = UISegmentedControl(items: segmentNames)
+        segCtrl.translatesAutoresizingMaskIntoConstraints = false
+        segCtrl.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
+        segCtrl.selectedSegmentIndex = 0
+        addSubview(segCtrl)
         return segCtrl
+    }()
+    
+    lazy private var containerView: UIView = {
+        let cv = UIView()
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(cv)
+        return cv
+    }()
+    
+    lazy private var aboutView: PKPokeDetailAboutView = {
+        let av = PKPokeDetailAboutView(with: pokemonModel)
+        containerView.addSubview(av)
+        av.isHidden = true
+        return av
+    }()
+    
+    lazy private var statsView: PKPokeDetailsStatsView = {
+        let statview = PKPokeDetailsStatsView(with: pokemonModel)
+        containerView.addSubview(statview)
+        statview.isHidden = true
+        return statview
     }()
     
     override init(frame: CGRect) {
@@ -49,32 +81,68 @@ class PKPokeDetailView: UIView {
     
     private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         layer.cornerRadius = 24
     }
     
     private func configureLayout() {
         NSLayoutConstraint.activate([
-            typeStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
-            typeStack.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            typeStack.heightAnchor.constraint(equalToConstant: 35),
+            segmentedDetails.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
+            segmentedDetails.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            segmentedDetails.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            containerView.topAnchor.constraint(equalTo: segmentedDetails.bottomAnchor, constant: 16),
+            containerView.leadingAnchor.constraint(equalTo: segmentedDetails.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: segmentedDetails.trailingAnchor),
+            
+            aboutView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            aboutView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            aboutView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            aboutView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            
+            statsView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            statsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            statsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            statsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
     }
     
-    private func populateViewsWithData() {
-        
+    func loadViews(with speciesData: PKPokemonSpecies) {
+        pokemonSpecies = speciesData
     }
     
-    private func segmentTapped(_ segmentedControl: UISegmentedControl) {
+    private func populateViewsWithData() {
         let allCases = PKPokeDetailTabs.allCases
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
         switch (selectedItem) {
         case .about:
-            print("About tapped")
+            guard let species = pokemonSpecies else {
+                return
+            }
+            aboutView.loadView(with: species)
         case .stats:
             print("Stats tapped")
-        case .forms:
-            print("Forms tapped")
+            //        case .forms:
+            //            print("Forms tapped")
+        }
+        segmentTapped()
+    }
+    
+    @objc private func segmentTapped() {
+        let allCases = PKPokeDetailTabs.allCases
+        let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
+        let allViews = [aboutView, statsView]
+        
+        allViews.forEach {$0.isHidden = true}
+        switch (selectedItem) {
+        case .about:
+            print("About tapped")
+            aboutView.isHidden = false
+        case .stats:
+            print("Stats tapped")
+            statsView.isHidden = false
+            //        case .forms:
+            //            print("Forms tapped")
         }
     }
 }

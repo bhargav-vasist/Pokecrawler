@@ -44,7 +44,7 @@ class PKPokemonTypeChipLabel: UILabel {
     
     private func configure() {
         text = pokemonType.type.name.rawValue.capitalized
-        font = UIFont.preferredFont(forTextStyle: .title2)
+        font = .preferredFont(forTextStyle: .callout)
         textAlignment = .center
         textColor = .white
         translatesAutoresizingMaskIntoConstraints = false

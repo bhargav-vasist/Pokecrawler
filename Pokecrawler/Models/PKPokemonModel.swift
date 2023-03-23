@@ -36,7 +36,7 @@ class PKPokemonModel: Codable, Hashable {
     var order: Int?
     
     /// The weight of this Pokémon
-    var weight: Int?
+    var weight: Int
     
     /// A list of abilities this Pokémon could potentially have
     //    var abilities: [PKMPokemonAbility]?
