@@ -13,7 +13,6 @@ extension URL {
         guard let url = URL(string: "\(string)") else {
             preconditionFailure("Invalid static URL string: \(string)")
         }
-        
         self = url
     }
 }
@@ -29,7 +28,7 @@ extension URLSession: NetworkSession {
         
         let task = dataTask(with: url) { data, _, error in
             if let error = error {
-                print("Error loading data", error.localizedDescription)
+                print("Error loading data with error - ", error.localizedDescription)
                 handler(.failure(NetworkingError.serverError))
             } else if let data = data {
                 handler(.success(data))

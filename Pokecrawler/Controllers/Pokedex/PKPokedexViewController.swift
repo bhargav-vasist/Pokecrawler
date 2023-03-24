@@ -35,6 +35,9 @@ class PKPokedexViewController: UIViewController {
     
     private func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = delegateFlowLayout
         collectionView.register(PKPokemonCollectionViewCell.self, forCellWithReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier)
@@ -42,7 +45,7 @@ class PKPokedexViewController: UIViewController {
     }
     
     private func configureNavigation() {
-        view.backgroundColor = .lightText
+        view.backgroundColor = .systemBackground
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setNavigationBarHidden(false, animated: true)

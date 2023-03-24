@@ -13,6 +13,14 @@ struct PKPokeDetailCardViewModel {
     
     var infoDescriptionOne: String
     var infoDescriptionTwo: String
+    
+    // If supplying with 
+    init(with pokemonModel: PKPokemonModel) {
+        infoTitleOne = "Height"
+        infoTitleTwo = "Weight"
+        infoDescriptionOne = "\(pokemonModel.height * 10) cm"
+        infoDescriptionTwo = "\(Float(pokemonModel.weight) / 100) kg"
+    }
 }
 
 class PKPokeDetailCardView: UIView {

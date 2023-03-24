@@ -82,18 +82,8 @@ class PKPokeDetailViewController: UIViewController {
     private func configureNavigation() {
         title = pokemonModel.name.capitalized
         
-//        navigationItem.standardAppearance
-        navigationItem.standardAppearance?.backgroundColor = .clear
-        navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationItem.standardAppearance?.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationItem.titleView?.tintColor = .white
-        
-        navigationController?.navigationItem.titleView?.tintColor = .white
-        
-//        navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
-//        navigationController?.navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationController?.navigationBar.standardAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .label
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(favoriteTapped))
     }
@@ -156,7 +146,6 @@ class PKPokeDetailViewController: UIViewController {
             case .success(let speciesData):
                 let decoder = PKPokemonSpecies.decoder
                 if let species = try? decoder.decode(PKPokemonSpecies.self, from: speciesData) {
-                    print("Species found", species)
                     self?.pokemonSpecies = species
                 }
             case .failure(let error):

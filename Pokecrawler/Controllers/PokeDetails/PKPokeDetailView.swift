@@ -12,6 +12,7 @@ class PKPokeDetailView: UIView {
     enum PKPokeDetailTabs: String, CaseIterable {
         case about
         case stats
+        // TODO: Add this tab in the next cycle
         //        case forms
     }
     
@@ -121,9 +122,8 @@ class PKPokeDetailView: UIView {
             }
             aboutView.loadView(with: species)
         case .stats:
-            print("Stats tapped")
-            //        case .forms:
-            //            print("Forms tapped")
+            break // No op because Stats already has all the data it needs
+
         }
         segmentTapped()
     }
@@ -133,16 +133,13 @@ class PKPokeDetailView: UIView {
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
         let allViews = [aboutView, statsView]
         
+        // Hide all and unhide only the right view
         allViews.forEach {$0.isHidden = true}
         switch (selectedItem) {
         case .about:
-            print("About tapped")
             aboutView.isHidden = false
         case .stats:
-            print("Stats tapped")
             statsView.isHidden = false
-            //        case .forms:
-            //            print("Forms tapped")
         }
     }
 }
