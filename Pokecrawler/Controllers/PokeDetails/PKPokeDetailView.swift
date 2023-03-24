@@ -16,23 +16,7 @@ class PKPokeDetailView: UIView {
         //        case forms
     }
     
-    private var pokemonModel: PKPokemonModel! {
-        didSet {
-            DispatchQueue.main.async {
-                self.populateViewsWithData()
-            }
-        }
-    }
-    
-    private var pokemonSpecies: PKPokemonSpecies? {
-        didSet {
-            if pokemonSpecies != nil {
-                DispatchQueue.main.async {
-                    self.populateViewsWithData()
-                }
-            }
-        }
-    }
+    private var pokemonModel: PKPokemonModel!
     
     lazy private var segmentedDetails: UISegmentedControl = {
         let segmentNames = PKPokeDetailTabs.allCases.map {$0.rawValue.capitalized}
@@ -109,21 +93,20 @@ class PKPokeDetailView: UIView {
     }
     
     func loadViews(with speciesData: PKPokemonSpecies) {
-        pokemonSpecies = speciesData
+        DispatchQueue.main.async { [weak self] in
+            self?.populateViews(with: speciesData)
+        }
     }
     
-    private func populateViewsWithData() {
+    private func populateViews(with speciesData: PKPokemonSpecies) {
         let allCases = PKPokeDetailTabs.allCases
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
         switch (selectedItem) {
         case .about:
-            guard let species = pokemonSpecies else {
-                return
-            }
-            aboutView.loadView(with: species)
+            aboutView.loadView(with: speciesData)
         case .stats:
             break // No op because Stats already has all the data it needs
-
+            
         }
         segmentTapped()
     }
@@ -133,7 +116,7 @@ class PKPokeDetailView: UIView {
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
         let allViews = [aboutView, statsView]
         
-        // Hide all and unhide only the right view
+        // Hide all and unhide only the selected view
         allViews.forEach {$0.isHidden = true}
         switch (selectedItem) {
         case .about:
