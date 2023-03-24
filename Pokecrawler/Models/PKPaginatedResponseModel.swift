@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PKPaginatedResponseModel: Codable {
+public struct PKPaginatedResponseModel: Codable {
     
     struct PKPaginatedResults: Codable {
         var name: String?
