@@ -55,15 +55,16 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
     }
     
     // Detects when the end of the page is about to hit and calls for fetching paginated data.
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    // Probably a better idea to use a combination of didEndDragging and DidEndDecelerating.
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let hasMorePokemon = pokedexViewController?.pokedexDataSource.hasMorePokemon, hasMorePokemon else { return }
         
         let contentHeight = scrollView.contentSize.height
         let contentOffset = scrollView.contentOffset.y
         let scrollViewFrameHeight = scrollView.frame.size.height
         
-        if (scrollViewFrameHeight + contentOffset) > (contentHeight - 300)  {
-            print("Fetching more for you m'lord")
+        print("Scrollview", scrollViewFrameHeight + contentOffset, "Versus", contentHeight-400)
+        if (scrollViewFrameHeight + contentOffset) > (contentHeight - 400)  {
             pokedexViewController?.pokedexDataSource.fetchEvenMorePokeData()
         }
     }

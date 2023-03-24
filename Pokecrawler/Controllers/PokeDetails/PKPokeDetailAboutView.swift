@@ -27,12 +27,7 @@ class PKPokeDetailAboutView: UIView {
     }()
     
     lazy var pokeBodyStatView: PKPokeDetailCardView = {
-        let vm = PKPokeDetailCardViewModel(
-            infoTitleOne: "Height",
-            infoTitleTwo: "Weight",
-            infoDescriptionOne: "\(pokemonModel.height * 10) cm",
-            infoDescriptionTwo: "\(Float(pokemonModel.weight) / 100) kg"
-        )
+        let vm = PKPokeDetailCardViewModel(with: pokemonModel)
         let bsView = PKPokeDetailCardView(with: vm)
         bsView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bsView)
@@ -88,6 +83,6 @@ class PKPokeDetailAboutView: UIView {
     
     func loadView(with pokeSpecies: PKPokemonSpecies) {
         pokemonSpecies = pokeSpecies
-        
     }
+    
 }

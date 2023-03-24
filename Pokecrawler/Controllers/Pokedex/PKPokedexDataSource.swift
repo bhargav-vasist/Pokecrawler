@@ -48,7 +48,7 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
                 unwrappedSelf.currentFetchOffset += unwrappedSelf.FETCH_LIMIT
                 unwrappedSelf.pokemonData = pokemon
             case .failure(let error):
-                print("Fetching pokemon failed with error", error)
+                print("Fetching all Pokemon failed with error", error)
             }
         }
     }
@@ -66,7 +66,7 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
                 unwrappedSelf.currentFetchOffset += unwrappedSelf.FETCH_LIMIT
                 unwrappedSelf.pokemonData.append(contentsOf: extraPokemon)
             case .failure(let error):
-                print("Fetching pokemon failed with error", error)
+                print("Fetching paginated pokemon failed with error", error)
             }
         }
     }

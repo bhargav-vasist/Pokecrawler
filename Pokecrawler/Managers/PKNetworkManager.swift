@@ -24,7 +24,7 @@ class PKNetworkManager: NetworkManagingKind {
                 case .success(let data):
                     completionHandler(.success(data))
                 case .failure(let error):
-                    print("Failed network request", error)
+                    print("Failed network request with error - ", error)
                 }
             }
             request?.resume()
@@ -60,7 +60,7 @@ class PKNetworkManager: NetworkManagingKind {
                         }
                     }
                 case .failure(let error):
-                    print("Failed network request", error)
+                    print("Failed network request with error -", error)
                 }
                 
                 dispatchGroup.notify(queue: .main) {
