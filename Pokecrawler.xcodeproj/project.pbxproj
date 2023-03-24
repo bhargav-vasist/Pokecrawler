@@ -147,6 +147,60 @@
 			path = Fakes;
 			sourceTree = "<group>";
 		};
+		BE8FF2AB29CE636400A0D303 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0935E29C9B83400D304F9 /* PKPrimaryTitleLabel.swift */,
+				BEE0936029C9B83E00D304F9 /* PKSecondaryTitleLabel.swift */,
+				BEE0937429CA5BB700D304F9 /* PKPokemonTypeChipLabel.swift */,
+				BEE0938429CCB2E200D304F9 /* PKHeadingLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		BE8FF2AC29CE637800A0D303 /* StackViews */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0936429C9BEA800D304F9 /* PKVertStackView.swift */,
+				BEE0937229CA5B4000D304F9 /* PKPokemonTypeStackView.swift */,
+			);
+			path = StackViews;
+			sourceTree = "<group>";
+		};
+		BE8FF2AD29CE638400A0D303 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0935C29C9B7CB00D304F9 /* PKPokemonCollectionViewCell.swift */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		BE8FF2AE29CE638E00A0D303 /* ImageViews */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0936229C9BD4B00D304F9 /* PKPokeSpriteImageView.swift */,
+			);
+			path = ImageViews;
+			sourceTree = "<group>";
+		};
+		BE8FF2AF29CE639700A0D303 /* ReusableViews */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0936A29C9D14400D304F9 /* PKPokemonCard.swift */,
+			);
+			path = ReusableViews;
+			sourceTree = "<group>";
+		};
+		BE8FF2B029CE63AC00A0D303 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				BEE0932D29C8F5CA00D304F9 /* PokecrawlerTests.swift */,
+				BEE0938829CDBBB500D304F9 /* EndpointTests.swift */,
+				BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		BEE0930A29C8F5C900D304F9 = {
 			isa = PBXGroup;
 			children = (
@@ -187,9 +241,7 @@
 				BE8FF2A429CE030100A0D303 /* Fakes */,
 				BEE0938B29CDBC2200D304F9 /* Mocks */,
 				BEE0938A29CDBC1C00D304F9 /* Stubs */,
-				BEE0932D29C8F5CA00D304F9 /* PokecrawlerTests.swift */,
-				BEE0938829CDBBB500D304F9 /* EndpointTests.swift */,
-				BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */,
+				BE8FF2B029CE63AC00A0D303 /* Tests */,
 			);
 			path = PokecrawlerTests;
 			sourceTree = "<group>";
@@ -257,15 +309,11 @@
 		BEE0935729C8F80900D304F9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BEE0935C29C9B7CB00D304F9 /* PKPokemonCollectionViewCell.swift */,
-				BEE0935E29C9B83400D304F9 /* PKPrimaryTitleLabel.swift */,
-				BEE0936029C9B83E00D304F9 /* PKSecondaryTitleLabel.swift */,
-				BEE0936229C9BD4B00D304F9 /* PKPokeSpriteImageView.swift */,
-				BEE0936429C9BEA800D304F9 /* PKVertStackView.swift */,
-				BEE0936A29C9D14400D304F9 /* PKPokemonCard.swift */,
-				BEE0937229CA5B4000D304F9 /* PKPokemonTypeStackView.swift */,
-				BEE0937429CA5BB700D304F9 /* PKPokemonTypeChipLabel.swift */,
-				BEE0938429CCB2E200D304F9 /* PKHeadingLabel.swift */,
+				BE8FF2AD29CE638400A0D303 /* CollectionViewCells */,
+				BE8FF2AB29CE636400A0D303 /* Labels */,
+				BE8FF2AE29CE638E00A0D303 /* ImageViews */,
+				BE8FF2AC29CE637800A0D303 /* StackViews */,
+				BE8FF2AF29CE639700A0D303 /* ReusableViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
