@@ -9,7 +9,6 @@ import UIKit
 
 class PKPokeDetailAboutView: UIView {
     
-    
     lazy private var typeStack: PKPokemonTypeStackView = {
         let sv = PKPokemonTypeStackView(with: pokemonModel.types)
         addSubview(sv)
@@ -35,13 +34,7 @@ class PKPokeDetailAboutView: UIView {
     }()
     
     private var pokemonModel: PKPokemonModel!
-    private var pokemonSpecies: PKPokemonSpecies? {
-        didSet {
-            DispatchQueue.main.async {
-                self.pokeDescriptionLabel.text = self.pokemonSpecies?.flavorTextEntries?.first(where: { $0.language?.name == "en"})?.flavorText?.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "\u{0C}", with: " ")
-            }
-        }
-    }
+    private var pokemonSpecies: PKPokemonSpecies?
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -61,7 +54,6 @@ class PKPokeDetailAboutView: UIView {
     
     private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
-        //        backgroundColor = .white
     }
     
     private func configureLayout() {
@@ -83,6 +75,10 @@ class PKPokeDetailAboutView: UIView {
     
     func loadView(with pokeSpecies: PKPokemonSpecies) {
         pokemonSpecies = pokeSpecies
+        DispatchQueue.main.async {
+            // Filters out UTF characters used in old Nintendo systems flavortext
+            self.pokeDescriptionLabel.text = self.pokemonSpecies?.flavorTextEntries?.first(where: { $0.language?.name == "en"})?.flavorText?.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "\u{0C}", with: " ")
+        }
     }
     
 }
