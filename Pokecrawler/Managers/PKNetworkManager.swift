@@ -8,10 +8,10 @@
 // Ideally I'd like to keep a network layer manager abstracted from UI libraries but alas I must cut corners.
 import UIKit
 
-class PKNetworkManager {
-    private let session: NetworkSession
+class PKNetworkManager: NetworkManagingKind {
+    internal let session: NetworkSession
     
-    private let cache = NSCache<NSString, UIImage>()
+    internal var cache = NSCache<NSString, UIImage>()
     
     init(session: NetworkSession = URLSession.shared) {
         self.session = session

@@ -5,21 +5,34 @@
 //  Created by Bhargav Vasist on 20/03/23.
 //
 
-import Foundation
+import UIKit
 
-typealias NetworkHandler = (Result<Data, Error>) -> Void
-typealias NetworkPaginatedHandler = (Result<[Data], Error>) -> Void
+public typealias NetworkHandler = (Result<Data, Error>) -> Void
+public typealias NetworkPaginatedHandler = (Result<[Data], Error>) -> Void
 
-enum NetworkingError: String, Error {
+public protocol NetworkManagingKind {
+    var session: NetworkSession { get }
+    
+    var cache: NSCache<NSString, UIImage> { get set }
+    
+    func fetch(_ endpoint: Endpoint, completionHandler: @escaping NetworkHandler)
+
+    func fetchPaginated(_ endpoint: Endpoint, completionHandler: @escaping NetworkPaginatedHandler)
+    
+    func getAvatarImage(urlString: String, completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void) -> URLSessionDataTask?
+}
+
+public enum NetworkingError: String, Error {
     case invalidURL = "Invalid URL"
     case invalidServerResponse = "Invalid response from the server. Make sure the username requested is entered is correctly and try again."
     case serverError = "Unable to complete your request due to a server error. Please bear with us while we fix this."
     case clientError = "Unable to complete your request due to a client error. Please check your internet connection and try again."
     case dataError = "Invalid data recieved from the server. This should not have happened. Please bear with us while we fix this problem"
     case decodeError = "The JSON data could not be decoded correctly for its model type."
+    case testingError = "Task failed successfully"
 }
 
-protocol NetworkSession {
+public protocol NetworkSession {
     @discardableResult
     func loadData(
         _ url: URL,
@@ -28,12 +41,12 @@ protocol NetworkSession {
 }
 
 // Inspired by https://www.swiftbysundell.com/articles/constructing-urls-in-swift/
-struct Endpoint {
+public struct Endpoint {
     var path: String
     var queryItems: [URLQueryItem] = []
 }
 
-extension Endpoint {
+public extension Endpoint {
     // Keep it backwards compatible
     init(from urlString: String) {
         if let url = URL(string: urlString) {
@@ -65,7 +78,7 @@ extension Endpoint {
     }
 }
 
-extension Endpoint {
+public extension Endpoint {
     static func getAllPokemon(with limit: Int? = nil, and offset: Int? = nil) -> Self {
         var queryItems: [URLQueryItem] = []
         if let limitValue = limit {

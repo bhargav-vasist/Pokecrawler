@@ -22,7 +22,7 @@ extension URL {
 extension URLSession: NetworkSession {
     
     @discardableResult
-    func loadData(
+    public func loadData(
         _ url: URL,
         then handler: @escaping NetworkHandler
     ) -> URLSessionDataTask? {

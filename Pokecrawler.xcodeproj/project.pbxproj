@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE8FF2A129CDC0FF00A0D303 /* NetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A029CDC0FF00A0D303 /* NetworkManagerMock.swift */; };
+		BE8FF2A329CDD02500A0D303 /* NetworkSessionStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A229CDD02500A0D303 /* NetworkSessionStub.swift */; };
+		BE8FF2A629CE031200A0D303 /* PaginatedResponseFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A529CE031200A0D303 /* PaginatedResponseFake.swift */; };
+		BE8FF2A829CE126E00A0D303 /* NetworkRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */; };
+		BE8FF2AA29CE130700A0D303 /* ImageCacheFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A929CE130700A0D303 /* ImageCacheFake.swift */; };
 		BEE0931729C8F5C900D304F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0931629C8F5C900D304F9 /* AppDelegate.swift */; };
 		BEE0931929C8F5C900D304F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0931829C8F5C900D304F9 /* SceneDelegate.swift */; };
 		BEE0931B29C8F5C900D304F9 /* PKPokedexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0931A29C8F5C900D304F9 /* PKPokedexViewController.swift */; };
@@ -41,6 +46,7 @@
 		BEE0938329CCAC3F00D304F9 /* PKPokeDetailCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0938229CCAC3F00D304F9 /* PKPokeDetailCardView.swift */; };
 		BEE0938529CCB2E200D304F9 /* PKHeadingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0938429CCB2E200D304F9 /* PKHeadingLabel.swift */; };
 		BEE0938729CCBA7D00D304F9 /* PKPokeDetailStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0938629CCBA7D00D304F9 /* PKPokeDetailStatsView.swift */; };
+		BEE0938929CDBBB500D304F9 /* EndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0938829CDBBB500D304F9 /* EndpointTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +67,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BE8FF2A029CDC0FF00A0D303 /* NetworkManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerMock.swift; sourceTree = "<group>"; };
+		BE8FF2A229CDD02500A0D303 /* NetworkSessionStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSessionStub.swift; sourceTree = "<group>"; };
+		BE8FF2A529CE031200A0D303 /* PaginatedResponseFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponseFake.swift; sourceTree = "<group>"; };
+		BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestTests.swift; sourceTree = "<group>"; };
+		BE8FF2A929CE130700A0D303 /* ImageCacheFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheFake.swift; sourceTree = "<group>"; };
 		BEE0931329C8F5C900D304F9 /* Pokecrawler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokecrawler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEE0931629C8F5C900D304F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEE0931829C8F5C900D304F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +110,7 @@
 		BEE0938229CCAC3F00D304F9 /* PKPokeDetailCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailCardView.swift; sourceTree = "<group>"; };
 		BEE0938429CCB2E200D304F9 /* PKHeadingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKHeadingLabel.swift; sourceTree = "<group>"; };
 		BEE0938629CCBA7D00D304F9 /* PKPokeDetailStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPokeDetailStatsView.swift; sourceTree = "<group>"; };
+		BEE0938829CDBBB500D304F9 /* EndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +138,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE8FF2A429CE030100A0D303 /* Fakes */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FF2A529CE031200A0D303 /* PaginatedResponseFake.swift */,
+				BE8FF2A929CE130700A0D303 /* ImageCacheFake.swift */,
+			);
+			path = Fakes;
+			sourceTree = "<group>";
+		};
 		BEE0930A29C8F5C900D304F9 = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +184,12 @@
 		BEE0932C29C8F5CA00D304F9 /* PokecrawlerTests */ = {
 			isa = PBXGroup;
 			children = (
+				BE8FF2A429CE030100A0D303 /* Fakes */,
+				BEE0938B29CDBC2200D304F9 /* Mocks */,
+				BEE0938A29CDBC1C00D304F9 /* Stubs */,
 				BEE0932D29C8F5CA00D304F9 /* PokecrawlerTests.swift */,
+				BEE0938829CDBBB500D304F9 /* EndpointTests.swift */,
+				BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */,
 			);
 			path = PokecrawlerTests;
 			sourceTree = "<group>";
@@ -264,6 +290,22 @@
 				BEE0938229CCAC3F00D304F9 /* PKPokeDetailCardView.swift */,
 			);
 			path = PokeDetails;
+			sourceTree = "<group>";
+		};
+		BEE0938A29CDBC1C00D304F9 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FF2A229CDD02500A0D303 /* NetworkSessionStub.swift */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
+		BEE0938B29CDBC2200D304F9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FF2A029CDC0FF00A0D303 /* NetworkManagerMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -432,7 +474,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEE0938929CDBBB500D304F9 /* EndpointTests.swift in Sources */,
+				BE8FF2A129CDC0FF00A0D303 /* NetworkManagerMock.swift in Sources */,
+				BE8FF2A829CE126E00A0D303 /* NetworkRequestTests.swift in Sources */,
 				BEE0932E29C8F5CA00D304F9 /* PokecrawlerTests.swift in Sources */,
+				BE8FF2A329CDD02500A0D303 /* NetworkSessionStub.swift in Sources */,
+				BE8FF2AA29CE130700A0D303 /* ImageCacheFake.swift in Sources */,
+				BE8FF2A629CE031200A0D303 /* PaginatedResponseFake.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
