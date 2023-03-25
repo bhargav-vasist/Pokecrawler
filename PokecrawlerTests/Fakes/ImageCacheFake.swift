@@ -18,4 +18,3 @@ struct ImageCacheFake {
         return fakedCache
     }
 }
-

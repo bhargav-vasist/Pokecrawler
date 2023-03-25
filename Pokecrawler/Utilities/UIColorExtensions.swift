@@ -46,7 +46,8 @@ extension UIColor {
 
 }
 
-/// With the help of SwifterSwift, https://github.com/SwifterSwift/SwifterSwift/blob/master/Sources/SwifterSwift/Shared/ColorExtensions.swift
+/// With the help of SwifterSwift,
+/// https://github.com/SwifterSwift/SwifterSwift/blob/master/Sources/SwifterSwift/Shared/ColorExtensions.swift
 extension UIColor {
     /// SwifterSwift: Flat UI colors
     enum FlatUI {

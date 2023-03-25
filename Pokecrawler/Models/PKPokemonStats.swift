@@ -26,7 +26,8 @@ class PKPokemonStat: Codable {
     }()
 }
 
-/// Stats determine certain aspects of battles. Each Pokémon has a value for each stat which grows as they gain levels and can be altered momentarily by effects in battles.
+/// Stats determine certain aspects of battles.
+/// Each Pokémon has a value for each stat which grows as they gain levels and can be altered momentarily by effects in battles.
 class PKPokeFullStat: Codable {
     
     /// The identifier for this stat resource
@@ -41,21 +42,6 @@ class PKPokeFullStat: Codable {
     /// Whether this stat only exists within a battle
     var isBattleOnly: Bool?
     
-    /// A detail of moves which affect this stat positively or negatively
-//    var affectingMoves: PKMMoveStatAffectSets?
-//
-//    //// A detail of natures which affect this stat positively or negatively
-//    var affectingNatures: PKMNatureStatAffectSets?
-//
-//    /// A list of characteristics that are set on a Pokémon when its highest base stat is this stat
-//    var characteristics: [PKMAPIResource<PKMCharacteristic>]?
-//
-//    /// The class of damage this stat is directly related to
-//    var moveDamageClass: PKMNamedAPIResource<PKMMoveDamageClass>?
-    
-    /// The name of this region listed in different languages
-//    var names: [PKMName]?
-    
     public static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -64,7 +50,9 @@ class PKPokeFullStat: Codable {
 }
 
 enum PKPokemonBaseStat: String, Codable {
+    // swiftlint:disable identifier_name
     case hp
+    // swiftlint:enable identifier_name
     case attack
     case defense
     case specialAttack
@@ -115,4 +103,3 @@ enum PKPokemonBaseStat: String, Codable {
         }
     }
 }
-

@@ -34,12 +34,10 @@ class PKPokemonTypeChipLabel: UILabel {
     }
     
     override var intrinsicContentSize: CGSize {
-        get {
-            var contentSize = super.intrinsicContentSize
-            contentSize.height += paddingInsets.top + paddingInsets.bottom
-            contentSize.width += paddingInsets.left + paddingInsets.right
-            return contentSize
-        }
+        var contentSize = super.intrinsicContentSize
+        contentSize.height += paddingInsets.top + paddingInsets.bottom
+        contentSize.width += paddingInsets.left + paddingInsets.right
+        return contentSize
     }
     
     private func configure() {

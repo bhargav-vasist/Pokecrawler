@@ -52,9 +52,8 @@ class PKPokemonCollectionViewCell: UICollectionViewCell {
             pokeCardView.topAnchor.constraint(equalTo: contentView.topAnchor),
             pokeCardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             pokeCardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            pokeCardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            pokeCardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
     }
 }
-

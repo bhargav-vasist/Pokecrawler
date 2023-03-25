@@ -40,7 +40,10 @@ class PKPokedexViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = delegateFlowLayout
-        collectionView.register(PKPokemonCollectionViewCell.self, forCellWithReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            PKPokemonCollectionViewCell.self,
+            forCellWithReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier
+        )
         view.addSubview(collectionView)
     }
     
@@ -53,8 +56,13 @@ class PKPokedexViewController: UIViewController {
     }
     
     private func configureDataSource() {
-        pokedexDataSource = PKPokedexDataSource(with: PKNetworkManager(), for: collectionView, and: { collectionView, indexPath, pokemon in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier, for: indexPath) as? PKPokemonCollectionViewCell else {
+        pokedexDataSource = PKPokedexDataSource(
+            with: PKNetworkManager(),
+            for: collectionView,
+            and: { collectionView, indexPath, pokemon in
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PKPokemonCollectionViewCell.reuseIdentifier,
+                for: indexPath) as? PKPokemonCollectionViewCell else {
                 fatalError("Failed to dequeue reusable PKPokemonCollectionViewCell")
             }
             cell.set(pokemon: pokemon)
@@ -63,4 +71,3 @@ class PKPokedexViewController: UIViewController {
         pokedexDataSource.fetchPokeData()
     }
 }
-

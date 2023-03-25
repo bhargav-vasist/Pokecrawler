@@ -19,15 +19,21 @@ public protocol NetworkManagingKind {
 
     func fetchPaginated(_ endpoint: Endpoint, completionHandler: @escaping NetworkPaginatedHandler)
     
-    func getAvatarImage(urlString: String, completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void) -> URLSessionDataTask?
+    func getAvatarImage(
+        urlString: String,
+        completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void
+    ) -> URLSessionDataTask?
 }
 
 public enum NetworkingError: String, Error {
     case invalidURL = "Invalid URL"
-    case invalidServerResponse = "Invalid response from the server. Make sure the username requested is entered is correctly and try again."
+    case invalidServerResponse =
+            "Invalid response from the server. Make sure the username requested is entered is correctly and try again."
     case serverError = "Unable to complete your request due to a server error. Please bear with us while we fix this."
-    case clientError = "Unable to complete your request due to a client error. Please check your internet connection and try again."
-    case dataError = "Invalid data recieved from the server. This should not have happened. Please bear with us while we fix this problem"
+    case clientError =
+            "Unable to complete your request due to a client error. Please check your internet connection and try again."
+    case dataError =
+            "Invalid data recieved from the server. This should not have happened. Please bear with us while we fix this problem"
     case decodeError = "The JSON data could not be decoded correctly for its model type."
     case testingError = "Task failed successfully"
 }
@@ -65,7 +71,7 @@ public extension Endpoint {
         components.scheme = "https"
         components.host = "pokeapi.co"
         components.path = path
-        if (!queryItems.isEmpty) {
+        if !queryItems.isEmpty {
             components.queryItems = queryItems
         }
         

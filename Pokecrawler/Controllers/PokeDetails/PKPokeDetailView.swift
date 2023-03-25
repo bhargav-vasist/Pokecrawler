@@ -29,17 +29,17 @@ class PKPokeDetailView: UIView {
     }()
     
     lazy private var containerView: UIView = {
-        let cv = UIView()
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(cv)
-        return cv
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(containerView)
+        return containerView
     }()
     
     lazy private var aboutView: PKPokeDetailAboutView = {
-        let av = PKPokeDetailAboutView(with: pokemonModel)
-        containerView.addSubview(av)
-        av.isHidden = true
-        return av
+        let abView = PKPokeDetailAboutView(with: pokemonModel)
+        containerView.addSubview(abView)
+        abView.isHidden = true
+        return abView
     }()
     
     lazy private var statsView: PKPokeDetailsStatsView = {
@@ -88,7 +88,7 @@ class PKPokeDetailView: UIView {
             statsView.topAnchor.constraint(equalTo: containerView.topAnchor),
             statsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             statsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            statsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            statsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
@@ -101,7 +101,7 @@ class PKPokeDetailView: UIView {
     private func populateViews(with speciesData: PKPokemonSpecies) {
         let allCases = PKPokeDetailTabs.allCases
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
-        switch (selectedItem) {
+        switch selectedItem {
         case .about:
             aboutView.loadView(with: speciesData)
         case .stats:
@@ -118,7 +118,7 @@ class PKPokeDetailView: UIView {
         
         // Hide all and unhide only the selected view
         allViews.forEach {$0.isHidden = true}
-        switch (selectedItem) {
+        switch selectedItem {
         case .about:
             aboutView.isHidden = false
         case .stats:
