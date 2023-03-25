@@ -28,24 +28,31 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
     var currentFetchOffset = 0
     
     // No of items to fetch per call
-    var FETCH_LIMIT = 10
+    let fetchItemLimit = 10
     
-    init(with networkManager: PKNetworkManager, for collectionView: UICollectionView, and cellProvider: @escaping UICollectionViewDiffableDataSource<PokeSections, PKPokemonModel>.CellProvider) {
+    init(
+        with networkManager: PKNetworkManager,
+        for collectionView: UICollectionView,
+        and cellProvider: @escaping UICollectionViewDiffableDataSource<PokeSections, PKPokemonModel>.CellProvider
+    ) {
         super.init(collectionView: collectionView, cellProvider: cellProvider)
         self.networkManager = networkManager
     }
     
     // Called the first time every load.
     func fetchPokeData() {
-        networkManager.fetchPaginated(.getAllPokemon(with: FETCH_LIMIT)) { [weak self] result in
+        networkManager.fetchPaginated(.getAllPokemon(with: fetchItemLimit)) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
-                let pokemon = pokeData.compactMap({ try? jsonDecoder.decode(PKPokemonModel.self, from: $0)}).sorted(by: { $0.id < $1.id })
+                let pokemon = pokeData.compactMap({
+                    try? jsonDecoder.decode(PKPokemonModel.self, from: $0
+                    )}
+                ).sorted(by: { $0.id < $1.id })
                 guard let unwrappedSelf = self else {
                     return
                 }
-                unwrappedSelf.currentFetchOffset += unwrappedSelf.FETCH_LIMIT
+                unwrappedSelf.currentFetchOffset += unwrappedSelf.fetchItemLimit
                 unwrappedSelf.pokemonData = pokemon
             case .failure(let error):
                 print("Fetching all Pokemon failed with error", error)
@@ -55,15 +62,21 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
     
     // Paginated calls to fetch more pokemon.
     func fetchEvenMorePokeData() {
-        networkManager.fetchPaginated(.getAllPokemon(with: FETCH_LIMIT, and: currentFetchOffset)) { [weak self] result in
+        networkManager.fetchPaginated(
+            .getAllPokemon(
+                with: fetchItemLimit, and: currentFetchOffset
+            )
+        ) { [weak self] result in
             switch result {
             case .success(let pokeData):
                 let jsonDecoder = PKPokemonModel.decoder
-                let extraPokemon = pokeData.compactMap({ try? jsonDecoder.decode(PKPokemonModel.self, from: $0)}).sorted(by: { $0.id < $1.id })
+                let extraPokemon = pokeData.compactMap({
+                    try? jsonDecoder.decode(PKPokemonModel.self, from: $0
+                    )}).sorted(by: { $0.id < $1.id })
                 guard let unwrappedSelf = self else {
                     return
                 }
-                unwrappedSelf.currentFetchOffset += unwrappedSelf.FETCH_LIMIT
+                unwrappedSelf.currentFetchOffset += unwrappedSelf.fetchItemLimit
                 unwrappedSelf.pokemonData.append(contentsOf: extraPokemon)
             case .failure(let error):
                 print("Fetching paginated pokemon failed with error", error)

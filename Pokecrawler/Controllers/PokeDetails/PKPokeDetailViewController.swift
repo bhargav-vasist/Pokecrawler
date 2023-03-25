@@ -35,9 +35,9 @@ class PKPokeDetailViewController: UIViewController {
     }()
     
     lazy private var pokeSpriteImageView: PKPokeSpriteImageView = {
-        let iv = PKPokeSpriteImageView()
-        headerContainerView.addSubview(iv)
-        return iv
+        let spriteImageView = PKPokeSpriteImageView()
+        headerContainerView.addSubview(spriteImageView)
+        return spriteImageView
     }()
     
     lazy private var detailView: PKPokeDetailView = {
@@ -85,7 +85,12 @@ class PKPokeDetailViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .label
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(favoriteTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: favoriteImage,
+            style: .plain,
+            target: self,
+            action: #selector(favoriteTapped)
+        )
     }
     
     private func configureLayout() {
@@ -110,14 +115,13 @@ class PKPokeDetailViewController: UIViewController {
             
             detailView.topAnchor.constraint(equalTo: headerContainerView.bottomAnchor),
             detailView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0),
-            detailView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 600),
+            detailView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 600)
         ])
     }
     
     private func configureViews() {
         fetchAndUpdatePokemonImage()
         fetchPokeSpeciesData()
-        fetchPokeStatsData()
     }
     
     private func fetchAndUpdatePokemonImage() {
@@ -142,7 +146,7 @@ class PKPokeDetailViewController: UIViewController {
             return
         }
         networkManager.fetch(Endpoint(from: speciesURL)) { [weak self] result in
-            switch (result) {
+            switch result {
             case .success(let speciesData):
                 let decoder = PKPokemonSpecies.decoder
                 if let species = try? decoder.decode(PKPokemonSpecies.self, from: speciesData) {
@@ -151,13 +155,6 @@ class PKPokeDetailViewController: UIViewController {
             case .failure(let error):
                 print("Errored fetching Species Data", error)
             }
-        }
-    }
-    
-    private func fetchPokeStatsData() {
-        guard let speciesURL = pokemonModel.species.url else {
-            print("Pokemon \(pokemonModel.name) does not have Species URL listed")
-            return
         }
     }
     
@@ -173,8 +170,7 @@ extension PKPokeDetailViewController: UIScrollViewDelegate {
             // Scrolling down: Scale
             headerHeightConstraint?.constant =
                 headerHeight - scrollView.contentOffset.y
-        }
-        else {
+        } else {
             // Scrolling up: Parallax
             let parallaxFactor: CGFloat = 0.15
             let offsetY = scrollView.contentOffset.y * parallaxFactor

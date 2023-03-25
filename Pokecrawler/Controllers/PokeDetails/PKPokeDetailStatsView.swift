@@ -12,11 +12,11 @@ class PKPokeDetailsStatsView: UIView {
     private var pokemonModel: PKPokemonModel!
     
     lazy private var mainStackView: UIStackView = {
-        let sv = PKVertStackView(with: [])
-        sv.alignment = .leading
-        sv.distribution = .fill
-        addSubview(sv)
-        return sv
+        let stack = PKVertStackView(with: [])
+        stack.alignment = .leading
+        stack.distribution = .fill
+        addSubview(stack)
+        return stack
     }()
     
     override init(frame: CGRect) {
@@ -34,7 +34,6 @@ class PKPokeDetailsStatsView: UIView {
         configureLayout()
     }
     
-    
     private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
         if let stats = pokemonModel.stats {
@@ -42,7 +41,11 @@ class PKPokeDetailsStatsView: UIView {
                 guard let baseStat = PKPokemonBaseStat(rawValue: stat.stat.name) else {
                     return
                 }
-                let statRow = PKPokeDetailsStatsRowView(with: baseStat, of: stat.baseStat, and: pokemonModel.types.first?.type.name)
+                let statRow = PKPokeDetailsStatsRowView(
+                    with: baseStat,
+                    of: stat.baseStat,
+                    and: pokemonModel.types.first?.type.name
+                )
                 mainStackView.addArrangedSubview(statRow)
             }
         }
@@ -82,14 +85,14 @@ class PKPokeDetailsStatsRowView: UIView {
     }()
     
     lazy private var statProgressbar: UIProgressView = {
-        let pv = UIProgressView(progressViewStyle: .bar)
-        pv.translatesAutoresizingMaskIntoConstraints = false
-        pv.trackTintColor = .systemGray
-        pv.progressTintColor = pokeType?.getColorForType()
-        pv.layer.cornerRadius = 7
-        pv.clipsToBounds = true
-        addSubview(pv)
-        return pv
+        let progressView = UIProgressView(progressViewStyle: .bar)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.trackTintColor = .systemGray
+        progressView.progressTintColor = pokeType?.getColorForType()
+        progressView.layer.cornerRadius = 7
+        progressView.clipsToBounds = true
+        addSubview(progressView)
+        return progressView
     }()
     
     override init(frame: CGRect) {
@@ -108,7 +111,6 @@ class PKPokeDetailsStatsRowView: UIView {
         configureView()
         configureLayout()
     }
-    
     
     private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false

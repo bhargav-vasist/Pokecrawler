@@ -42,7 +42,8 @@ class PKNetworkManager: NetworkManagingKind {
                 switch result {
                 case .success(let data):
                     let decoder = PKPaginatedResponseModel.decoder
-                    if let response = try? decoder.decode(PKPaginatedResponseModel.self, from: data), let results = response.results {
+                    if let response = try? decoder.decode(PKPaginatedResponseModel.self, from: data),
+                       let results = response.results {
                         for item in results {
                             if let itemURL = item.url {
                                 dispatchGroup.enter()
@@ -73,7 +74,10 @@ class PKNetworkManager: NetworkManagingKind {
         }
     }
     
-    func getAvatarImage(urlString: String, completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void) -> URLSessionDataTask? {
+    func getAvatarImage(
+        urlString: String,
+        completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void
+    ) -> URLSessionDataTask? {
         // check cache first
         if let image = cache.object(forKey: NSString(string: urlString)) {
             completionHandler(.success(image))

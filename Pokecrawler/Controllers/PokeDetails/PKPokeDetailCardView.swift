@@ -52,28 +52,28 @@ class PKPokeDetailCardView: UIView {
     }()
     
     lazy private var vertStackOne: PKVertStackView = {
-        let sv = PKVertStackView(with: [titleLabelOne, descriptionLabelOne])
-        sv.alignment = .leading
-        sv.spacing = 4
-        return sv
+        let stack = PKVertStackView(with: [titleLabelOne, descriptionLabelOne])
+        stack.alignment = .leading
+        stack.spacing = 4
+        return stack
     }()
     
     lazy private var vertStackTwo: PKVertStackView = {
-        let sv = PKVertStackView(with: [titleLabelTwo, descriptionLabelTwo])
-        sv.alignment = .leading
-        sv.spacing = 4
-        return sv
+        let stack = PKVertStackView(with: [titleLabelTwo, descriptionLabelTwo])
+        stack.alignment = .leading
+        stack.spacing = 4
+        return stack
     }()
     
     lazy private var mainStack: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [vertStackOne, vertStackTwo])
-        sv.axis = .horizontal
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.spacing = 12
-        sv.alignment = .center
-        sv.distribution = .fillEqually
-        containerView.addSubview(sv)
-        return sv
+        let stack = UIStackView(arrangedSubviews: [vertStackOne, vertStackTwo])
+        stack.axis = .horizontal
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.spacing = 12
+        stack.alignment = .center
+        stack.distribution = .fillEqually
+        containerView.addSubview(stack)
+        return stack
     }()
     
     lazy private var containerView: UIView = {

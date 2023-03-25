@@ -26,13 +26,11 @@ class PKAPIResource: Codable {
     /// The URL of the referenced resource
     var url: String?
     
-    
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.url = try container.decode(String.self, forKey: .url)
     }
 }
-
 
 /// Named API Resource
 class PKMNamedAPIResource<T: Codable>: PKAPIResource {
@@ -42,7 +40,6 @@ class PKMNamedAPIResource<T: Codable>: PKAPIResource {
     
     /// The name of the referenced resource
     var name: T
-    
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -73,6 +70,8 @@ enum PKPokemonBaseType: String, Codable {
     case fairy
     case unknown
     
+    // Unfortunate colorcoding mapping since the API gives us very little context clues.
+    // swiftlint:disable cyclomatic_complexity
     func getColorForType() -> UIColor {
         switch self {
         case .grass:
@@ -115,5 +114,6 @@ enum PKPokemonBaseType: String, Codable {
             return .FlatUI.midnightBlue
             
         }
+        // swiftlint:enable cyclomatic_complexity
     }
 }

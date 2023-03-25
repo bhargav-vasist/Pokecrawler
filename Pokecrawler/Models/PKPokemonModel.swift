@@ -38,17 +38,8 @@ class PKPokemonModel: Codable, Hashable {
     /// The weight of this Pokémon
     var weight: Int
     
-    /// A list of abilities this Pokémon could potentially have
-    //    var abilities: [PKMPokemonAbility]?
-    
-    /// A list of forms this Pokémon can take on
-    //    var forms: [PKMNamedAPIResource<PKMPokemonForm>]?
-    
     /// A list of location areas as well as encounter details pertaining to specific versions
     var locationAreaEncounters: String?
-    
-    /// A list of moves along with learn methods and level details pertaining to specific version groups
-    //    var moves: [PKMPokemonMove]?
     
     /// A set of sprites used to depict this Pokémon in the game
     var sprites: PKPokemonSprite

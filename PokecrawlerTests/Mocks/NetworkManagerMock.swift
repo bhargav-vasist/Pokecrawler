@@ -33,7 +33,10 @@ class NetworkManagerMock: NetworkManagingKind {
         }
     }
     
-    func fetchPaginated(_ endpoint: Pokecrawler.Endpoint, completionHandler: @escaping Pokecrawler.NetworkPaginatedHandler) {
+    func fetchPaginated(
+        _ endpoint: Pokecrawler.Endpoint,
+        completionHandler: @escaping Pokecrawler.NetworkPaginatedHandler
+    ) {
         fetchPaginationCallCount += 1
         let fakedResponse = PaginatedResponseFake()
         var totalResponses: [Data] = []
@@ -50,9 +53,11 @@ class NetworkManagerMock: NetworkManagingKind {
         })
         completionHandler(.success(totalResponses))
     }
-    
-    
-    func getAvatarImage(urlString: String, completionHandler: @escaping (Result<UIImage, Pokecrawler.NetworkingError>) -> Void) -> URLSessionDataTask? {
+
+    func getAvatarImage(
+        urlString: String,
+        completionHandler: @escaping (Result<UIImage, Pokecrawler.NetworkingError>) -> Void
+    ) -> URLSessionDataTask? {
         // TODO: - check for corrrect caching
         return nil
     }

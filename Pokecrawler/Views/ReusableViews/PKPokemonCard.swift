@@ -20,8 +20,8 @@ class PKPokemonCard: UIView {
     }()
     
     lazy var verticalStackView: PKVertStackView = {
-        let sv = PKVertStackView(with: [pokeSpriteImageView, pokemonNameLabel, pokemonIDLabel])
-        return sv
+        let stack = PKVertStackView(with: [pokeSpriteImageView, pokemonNameLabel, pokemonIDLabel])
+        return stack
     }()
     
     init() {
@@ -44,7 +44,7 @@ class PKPokemonCard: UIView {
             verticalStackView.topAnchor.constraint(equalTo: topAnchor),
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
