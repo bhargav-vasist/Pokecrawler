@@ -15,6 +15,7 @@ Here's the repository for the Pokecrawler App for the take home coding challenge
 - Dependency Injection for easier tests
 - Examples of Fakes, Stubs, Mocks in Network Tests
 - Parallax view demo for detail page
+- Adding favorites with File Persistence
 - Adaptable colors for automatic dark mode support
 - Adaptable fontsizes for different device sizes
 - SwiftLint configured and ready
@@ -23,8 +24,8 @@ Here's the repository for the Pokecrawler App for the take home coding challenge
 - ViewModels for Reusable Views
 - UI Testing for navigation and screen renders
 - Async/await replacing completion handler tree nesting
-- Moarr dependency injection
-- Moarr unit tests
+- Moarr dependency injection - Composable Protocols for Networking&Storage
+- Moarr unit tests - StorageManager tests, Encoding/Decoding Tests, Limit Testing StatBar values
 
 ## Resources that inspired the code
 - [Swift by Sundell](https://www.swiftbysundell.com/) - A lot of the networking layers and Mock Testing
