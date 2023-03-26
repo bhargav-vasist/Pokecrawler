@@ -41,10 +41,17 @@ class PKMNamedAPIResource<T: Codable>: PKAPIResource {
     /// The name of the referenced resource
     var name: T
     
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        
+        try super.encode(to: encoder)
+    }
+
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(T.self, forKey: .name)
-        
+
         try super.init(from: decoder)
     }
 }

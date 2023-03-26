@@ -9,6 +9,7 @@ import UIKit
 
 class PKPokeDetailViewController: UIViewController {
     
+    // MARK: - Models
     private var pokemonModel: PKPokemonModel!
     private var pokemonSpecies: PKPokemonSpecies? {
         didSet {
@@ -18,6 +19,12 @@ class PKPokeDetailViewController: UIViewController {
         }
     }
     
+    // MARK: - Managers
+    private var imageLoadingTask: URLSessionDataTask?
+    private var networkManager: PKNetworkManager!
+    private var storageManager: PKStorageManager!
+        
+    // MARK: - Views
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.delegate = self
@@ -47,17 +54,16 @@ class PKPokeDetailViewController: UIViewController {
         return view
     }()
     
-    private var imageLoadingTask: URLSessionDataTask?
-    private var networkManager: PKNetworkManager!
-    
+    // MARK: - Constraints
     private var headerTopConstraint: NSLayoutConstraint!
     private var headerHeightConstraint: NSLayoutConstraint!
     fileprivate let headerHeight: CGFloat = 250
     
-    init(with pokemonData: PKPokemonModel, and networkManager: PKNetworkManager) {
+    init(with pokemonData: PKPokemonModel, and networkManager: PKNetworkManager, also storageManager: PKStorageManager) {
         super.init(nibName: nil, bundle: nil)
         self.pokemonModel = pokemonData
         self.networkManager = networkManager
+        self.storageManager = storageManager
     }
     
     required init?(coder: NSCoder) {
@@ -122,6 +128,7 @@ class PKPokeDetailViewController: UIViewController {
     private func configureViews() {
         fetchAndUpdatePokemonImage()
         fetchPokeSpeciesData()
+        fetchAndUpdateFavouriteStatus()
     }
     
     private func fetchAndUpdatePokemonImage() {
@@ -158,12 +165,33 @@ class PKPokeDetailViewController: UIViewController {
         }
     }
     
+    private func fetchAndUpdateFavouriteStatus() {
+        Task { [weak self] in
+            self?.isFavorited = try await storageManager.retrievefavourites().contains(where: { $0.id == pokemonModel.id })
+        }
+    }
+    
     @objc private func favoriteTapped() {
-        isFavorited.toggle()
-        // TODO: - Add to persistence layer
+        Task {
+            await saveToStorage()
+        }
+    }
+    
+    private func saveToStorage() async {
+        do {
+            let updateOp = isFavorited ? FavouriteUpdateOp.remove : FavouriteUpdateOp.add
+            let didUpdate = try await storageManager.updateFavouritePokemon(with: pokemonModel, typeOfUpdate: updateOp)
+            guard didUpdate else {
+                throw StorageError.saveFavouritesError
+            }
+            isFavorited.toggle()
+        } catch {
+            print("Favouriting pokemon errored with - ", error)
+        }
     }
 }
 
+// MARK: - UIScrollView Delegate Methods
 extension PKPokeDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0.0 {
