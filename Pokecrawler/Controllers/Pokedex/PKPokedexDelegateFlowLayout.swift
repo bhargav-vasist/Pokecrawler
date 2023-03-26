@@ -78,7 +78,7 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
         guard let pokemon = pokedexViewController?.pokedexDataSource.itemIdentifier(for: indexPath) else {
             fatalError("Critical data for Pokemon Cell not found! This should not have happenened")
         }
-        let pokeDetailVC = PKPokeDetailViewController(with: pokemon, and: PKNetworkManager())
+        let pokeDetailVC = PKPokeDetailViewController(with: pokemon, and: PKNetworkManager(), also: PKStorageManager())
         pokedexViewController?.navigationController?.pushViewController(pokeDetailVC, animated: true)
     }
     

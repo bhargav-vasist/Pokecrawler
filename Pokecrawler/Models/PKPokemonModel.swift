@@ -53,6 +53,12 @@ class PKPokemonModel: Codable, Hashable {
     /// A list of details showing types this Pokémon has
     var types: [PKPokemonSpeciesType]
     
+    static var encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        return encoder
+    }()
+    
     static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
