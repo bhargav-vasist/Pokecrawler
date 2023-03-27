@@ -9,6 +9,7 @@ import UIKit
 
 extension UIApplication {
     
+    /// The recommended way to get key window iOS 15.0+
     var keyWindow: UIWindow? {
         // Get connected scenes
         return UIApplication.shared.connectedScenes

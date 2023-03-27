@@ -7,11 +7,13 @@
 
 import Foundation
 
+/// Static Key Structure for User Preferences
 enum UserDefaultKeys: String {
     case darkModeToggle = "DarkModeToggle"
     case systemDefault = "SystemDefault"
 }
 
+/// A list of errors we might encounter trying to persist data in our app
 public enum StorageError: String, Error {
     case invalidURL = "Invalid URL"
     case decodeError = "The JSON data could not be decoded correctly for its model type."

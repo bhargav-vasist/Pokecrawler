@@ -72,6 +72,8 @@ class PKPokedexViewController: UIViewController {
         navigationController?.pushViewController(PKSettingsTableViewController(with: PKStorageManager()), animated: true)
     }
     
+    // Manages all the data manipulation operations like
+    // Fetch, Load, Update for the CollectionView
     private func configureDataSource() {
         pokedexDataSource = PKPokedexDataSource(
             with: PKNetworkManager(),

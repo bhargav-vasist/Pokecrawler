@@ -30,6 +30,9 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
     // No of items to fetch per call
     let fetchItemLimit = 10
     
+    // Paginated Call in Progress
+    var isFetchingNextPage = false
+    
     init(
         with networkManager: PKNetworkManager,
         for collectionView: UICollectionView,
@@ -62,6 +65,11 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
     
     // Paginated calls to fetch more pokemon.
     func fetchEvenMorePokeData() {
+        // There's another call going on. Do not fetch more.
+        guard !isFetchingNextPage else {
+            return
+        }
+        isFetchingNextPage = true
         networkManager.fetchPaginated(
             .getAllPokemon(
                 with: fetchItemLimit, and: currentFetchOffset
@@ -81,6 +89,7 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
             case .failure(let error):
                 print("Fetching paginated pokemon failed with error", error)
             }
+            self?.isFetchingNextPage = false
         }
     }
     

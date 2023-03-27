@@ -9,33 +9,59 @@
 
 import UIKit
 
-enum FavouriteUpdateOp {
+/// Defines types of operations used with persistence layer
+enum PKStorageUpdateOperationKind {
     case add
     case remove
 }
 
+/// The default class for managing persistence and storage items for the app
 public class PKStorageManager {
     
+    /// File Manager instance used to retrieve Local Storage documents
     private var fileManager: FileManager
+    
+    /// User Defaults instance used for User Preferences and other ephemeral persisting
+    /// Uses the standard suite by default unless specified
     private var userDefaults: UserDefaults
 
+    /**
+     Manages persistence across the app
+     - Parameter fileManager: File Manager dependency. Uses default instance unless specified
+     - Parameter userDefaults: User Default dependency. Uses the standard suite by default unless specified
+     */
     init(fileManager: FileManager = FileManager.default, and userDefaults: UserDefaults = UserDefaults()) {
         self.fileManager = fileManager
         self.userDefaults = userDefaults
     }
     
+    /**
+     Retrieves object from User Defaults for the key
+     - Parameter key: Object's key of UserDefaultKeys instance
+     - Returns: Any object. Nil if the object doesn't exist
+     */
     func getFromDefaults(for key: UserDefaultKeys) -> Any? {
         return userDefaults.object(forKey: key.rawValue)
     }
     
-    func updateDefaults(for key: UserDefaultKeys, with value: Any) {
+    /**
+     Updates object from User Defaults for the key specified
+     - Parameter key: Object's key of UserDefaultKeys instance
+     - Parameter value: Updated value for the key. Can be set to nil implicitly
+     */
+    func updateDefaults(for key: UserDefaultKeys, with value: Any?) {
         userDefaults.set(value, forKey: key.rawValue)
     }
     
-    func updateFavouritePokemon(with pokemon: PKPokemonModel, typeOfUpdate: FavouriteUpdateOp) async throws -> Bool {
+    /**
+     - Parameter pokemon: The Pokemon to be favourited of instance PokemonModel
+     - Parameter type: One of the base operations defined by PKStorageUpdateOperationKind
+     - Returns: Boolean indicating success or failure of the operation
+     */
+    func updateFavouritePokemon(with pokemon: PKPokemonModel, of type: PKStorageUpdateOperationKind) async throws -> Bool {
         do {
             var favourites = try await retrievefavourites()
-            switch typeOfUpdate {
+            switch type {
             case .add:
                 guard !favourites.contains(where: { $0 == pokemon }) else {
                     throw StorageError.dedupeError
@@ -54,6 +80,9 @@ public class PKStorageManager {
         }
     }
     
+    /**
+     - Returns: Array of pokemon that have been saved
+     */
     func retrievefavourites() async throws -> [PKPokemonModel] {
         let favouritesURL = URL(
             fileURLWithPath: "favourites",
@@ -79,6 +108,10 @@ public class PKStorageManager {
         }
     }
     
+    /**
+     - Parameter favPokemon: The Array of Pokemon to be saved of instance PokemonModel
+     - Returns: Boolean indicating success or failure of the operation
+     */
     private func save(favPokemon: [PKPokemonModel]) throws -> Bool {
         let favouritesURL = URL(
             fileURLWithPath: "favourites",

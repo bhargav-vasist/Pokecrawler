@@ -73,6 +73,7 @@ class PKSettingsTableViewController: UITableViewController {
             UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
         }
         
+        // Persist User preference across App launches
         storageManager.updateDefaults(for: .darkModeToggle, with: isDarkModeEnabled)
     }
     

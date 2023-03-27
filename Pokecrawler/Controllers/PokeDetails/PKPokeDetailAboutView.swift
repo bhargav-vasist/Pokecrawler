@@ -36,6 +36,7 @@ class PKPokeDetailAboutView: UIView {
     private var pokemonModel: PKPokemonModel!
     private var pokemonSpecies: PKPokemonSpecies?
 
+    // MARK: - Lifecycle Methods
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
@@ -55,6 +56,7 @@ class PKPokeDetailAboutView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
     }
 
+    // MARK: - Layouts and Constraints
     private func configureLayout() {
         NSLayoutConstraint.activate([
             typeStack.topAnchor.constraint(equalTo: topAnchor, constant: 4),

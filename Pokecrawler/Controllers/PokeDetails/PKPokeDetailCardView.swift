@@ -25,8 +25,10 @@ struct PKPokeDetailCardViewModel {
 
 class PKPokeDetailCardView: UIView {
     
+    // MARK: - Models
     private var viewModel: PKPokeDetailCardViewModel!
     
+    // MARK: - Views
     lazy private var titleLabelOne: PKSecondaryTitleLabel = {
         let label = PKSecondaryTitleLabel(fontSize: 16, text: viewModel.infoTitleOne)
         label.font = .preferredFont(forTextStyle: .caption1)
@@ -85,6 +87,7 @@ class PKPokeDetailCardView: UIView {
     
     let cornerRadius: CGFloat = 12.0
     
+    // MARK: - Lifecycle Methods
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
@@ -105,7 +108,6 @@ class PKPokeDetailCardView: UIView {
         containerView.backgroundColor = .secondarySystemBackground
         
         // set the shadow of the view's layer
-        
         layer.backgroundColor = UIColor.clear.cgColor
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1.0)
@@ -121,6 +123,7 @@ class PKPokeDetailCardView: UIView {
         
     }
     
+    // MARK: - Layouts and Constraints
     private func configureLayout() {
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: containerView.topAnchor),

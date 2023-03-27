@@ -9,15 +9,15 @@ import UIKit
 
 class PKPokeDetailView: UIView {
     
+    // MARK: - Models
     enum PKPokeDetailTabs: String, CaseIterable {
         case about
         case stats
-        // TODO: Add this tab in the next cycle
-        //        case forms
     }
     
     private var pokemonModel: PKPokemonModel!
     
+    // MARK: - Views
     lazy private var segmentedDetails: UISegmentedControl = {
         let segmentNames = PKPokeDetailTabs.allCases.map {$0.rawValue.capitalized}
         let segCtrl = UISegmentedControl(items: segmentNames)
@@ -49,6 +49,7 @@ class PKPokeDetailView: UIView {
         return statview
     }()
     
+    // MARK: - Lifecyle Methods
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
@@ -70,6 +71,7 @@ class PKPokeDetailView: UIView {
         layer.cornerRadius = 24
     }
     
+    // MARK: - Layouts and Constraint
     private func configureLayout() {
         NSLayoutConstraint.activate([
             segmentedDetails.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
@@ -92,12 +94,15 @@ class PKPokeDetailView: UIView {
         ])
     }
     
+    // Ideally, a ViewModel does this job for the view.
+    // Loads the async fetched data to the right view.
     func loadViews(with speciesData: PKPokemonSpecies) {
         DispatchQueue.main.async { [weak self] in
             self?.populateViews(with: speciesData)
         }
     }
     
+    // Set the appropriate data to the respective view
     private func populateViews(with speciesData: PKPokemonSpecies) {
         let allCases = PKPokeDetailTabs.allCases
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
@@ -106,11 +111,12 @@ class PKPokeDetailView: UIView {
             aboutView.loadView(with: speciesData)
         case .stats:
             break // No op because Stats already has all the data it needs
-            
         }
         segmentTapped()
     }
     
+    // Only changes the visual state of the segment selected
+    // and also toggles the visibilty of the other views
     @objc private func segmentTapped() {
         let allCases = PKPokeDetailTabs.allCases
         let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]

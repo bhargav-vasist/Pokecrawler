@@ -59,6 +59,17 @@ class PKPokeDetailViewController: UIViewController {
     private var headerHeightConstraint: NSLayoutConstraint!
     fileprivate let headerHeight: CGFloat = 250
     
+    // MARK: - Computed Properties
+    private var isFavorited = false {
+        didSet {
+            navigationItem.rightBarButtonItem?.image = favoriteImage
+        }
+    }
+    private var favoriteImage: UIImage? {
+        return isFavorited ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+    }
+    
+    // MARK: - Lifecycle Methods
     init(with pokemonData: PKPokemonModel, and networkManager: PKNetworkManager, also storageManager: PKStorageManager) {
         super.init(nibName: nil, bundle: nil)
         self.pokemonModel = pokemonData
@@ -69,15 +80,7 @@ class PKPokeDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    private var isFavorited = false {
-        didSet {
-            navigationItem.rightBarButtonItem?.image = favoriteImage
-        }
-    }
-    private var favoriteImage: UIImage? {
-        return isFavorited ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
@@ -85,6 +88,7 @@ class PKPokeDetailViewController: UIViewController {
         configureViews()
     }
     
+    // MARK: - Navigation Method
     private func configureNavigation() {
         title = pokemonModel.name.capitalized
         
@@ -99,9 +103,8 @@ class PKPokeDetailViewController: UIViewController {
         )
     }
     
+    // MARK: - Layouts and Constraints
     private func configureLayout() {
-        view.backgroundColor = pokemonModel.types.first?.type.name.getColorForType()
-        
         headerTopConstraint = headerContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         headerHeightConstraint = headerContainerView.heightAnchor.constraint(equalToConstant: headerHeight)
         NSLayoutConstraint.activate([
@@ -126,6 +129,7 @@ class PKPokeDetailViewController: UIViewController {
     }
     
     private func configureViews() {
+        view.backgroundColor = pokemonModel.types.first?.type.name.getColorForType()
         fetchAndUpdatePokemonImage()
         fetchPokeSpeciesData()
         fetchAndUpdateFavouriteStatus()
@@ -179,8 +183,8 @@ class PKPokeDetailViewController: UIViewController {
     
     private func saveToStorage() async {
         do {
-            let updateOp = isFavorited ? FavouriteUpdateOp.remove : FavouriteUpdateOp.add
-            let didUpdate = try await storageManager.updateFavouritePokemon(with: pokemonModel, typeOfUpdate: updateOp)
+            let updateOp = isFavorited ? PKStorageUpdateOperationKind.remove : PKStorageUpdateOperationKind.add
+            let didUpdate = try await storageManager.updateFavouritePokemon(with: pokemonModel, of: updateOp)
             guard didUpdate else {
                 throw StorageError.saveFavouritesError
             }
@@ -193,6 +197,8 @@ class PKPokeDetailViewController: UIViewController {
 
 // MARK: - UIScrollView Delegate Methods
 extension PKPokeDetailViewController: UIScrollViewDelegate {
+    
+    // Introduces a Parallax effect for the Pokemon Sprite
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0.0 {
             // Scrolling down: Scale

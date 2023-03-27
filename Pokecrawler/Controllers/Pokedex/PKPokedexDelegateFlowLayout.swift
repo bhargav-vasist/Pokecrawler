@@ -10,7 +10,6 @@ import UIKit
 class PKPokedexDelegateFlowLayout: NSObject {
     var pokedexViewController: PKPokedexViewController?
     
-    // TODO: Introduce items per row as a filter option
     struct LayoutConstants {
         static let maxItemsPerRow = 2.0
         static let interItemSpacing = 5.0
@@ -92,7 +91,19 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
         let contentOffset = scrollView.contentOffset.y
         let scrollViewFrameHeight = scrollView.frame.size.height
         
-        print("Scrollview", scrollViewFrameHeight + contentOffset, "Versus", contentHeight-400)
+        if (scrollViewFrameHeight + contentOffset) > (contentHeight - 250) {
+            pokedexViewController?.pokedexDataSource.fetchEvenMorePokeData()
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard let hasMorePokemon = pokedexViewController?.pokedexDataSource.hasMorePokemon,
+              hasMorePokemon else { return }
+        
+        let contentHeight = scrollView.contentSize.height
+        let contentOffset = scrollView.contentOffset.y
+        let scrollViewFrameHeight = scrollView.frame.size.height
+        
         if (scrollViewFrameHeight + contentOffset) > (contentHeight - 400) {
             pokedexViewController?.pokedexDataSource.fetchEvenMorePokeData()
         }
