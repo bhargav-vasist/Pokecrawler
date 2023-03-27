@@ -26,6 +26,7 @@ class PKAPIResource: Codable {
     /// The URL of the referenced resource
     var url: String?
     
+    /// Decode with the correct key strategy from Parent Decoder
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.url = try container.decode(String.self, forKey: .url)
@@ -41,13 +42,14 @@ class PKMNamedAPIResource<T: Codable>: PKAPIResource {
     /// The name of the referenced resource
     var name: T
     
+    /// Encode the Generic Type to the container
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
         
         try super.encode(to: encoder)
     }
-
+    /// Decode with the correct key strategy from Parent Decoder
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(T.self, forKey: .name)
@@ -119,7 +121,6 @@ enum PKPokemonBaseType: String, Codable {
             return .FlatUI.concrete
         case .unknown:
             return .FlatUI.midnightBlue
-            
         }
         // swiftlint:enable cyclomatic_complexity
     }

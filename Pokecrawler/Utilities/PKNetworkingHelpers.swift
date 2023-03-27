@@ -7,24 +7,52 @@
 
 import UIKit
 
+/// Return handler for all fetch requests
 public typealias NetworkHandler = (Result<Data, Error>) -> Void
+
+/// Return handler for paginated requests with multiple requests
 public typealias NetworkPaginatedHandler = (Result<[Data], Error>) -> Void
 
+/// Interface exposing required methods for a Network Layer Manager
 public protocol NetworkManagingKind {
+    
+    /// The NetworkSession object used to interface with URLSession protocols
     var session: NetworkSession { get }
     
+    /// Used to cache Images
     var cache: NSCache<NSString, UIImage> { get set }
     
+    /**
+     Make a Network Fetch Request.
+     Uses URLSessionDataTask under the hood
+     - Parameter endpoint: The Endpoint to be fetched
+     - Parameter completionHandler: A Result<Data, Error> of the Fetch Task
+     */
     func fetch(_ endpoint: Endpoint, completionHandler: @escaping NetworkHandler)
 
+    /**
+     Make a Network Fetch Request for paginated results.
+     Automatically fetches nested data for each resulting URL
+     Uses URLSessionDataTask under the hood with DispatchGroups for managing dependencies with Multiprocesses
+     - Parameter endpoint: The Endpoint to be fetched
+     - Parameter completionHandler: A Result<Data, Error> of the Fetch Task
+     */
     func fetchPaginated(_ endpoint: Endpoint, completionHandler: @escaping NetworkPaginatedHandler)
     
+    /**
+     Fetches an image from the web with automatic caching.
+     Uses URLSessionDataTask under the hood
+     - Parameter urlString: Image URL
+     - Parameter completionHandler: A Result<UIImage, Error> of the Fetch Task
+     - Returns: The URLSessionDataTask for the fetch. Reference can be used to cancel ongoing requests
+     */
     func getAvatarImage(
         urlString: String,
         completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void
     ) -> URLSessionDataTask?
 }
 
+// A list of commonly encountered Networking Errors
 public enum NetworkingError: String, Error {
     case invalidURL = "Invalid URL"
     case invalidServerResponse =
@@ -38,7 +66,16 @@ public enum NetworkingError: String, Error {
     case testingError = "Task failed successfully"
 }
 
+/// Separating URLSession and Network Manager instances
+/// helps us acheive full mocking instead of partial mocking
 public protocol NetworkSession {
+    /**
+     Make a Network Fetch Request.
+     Uses URLSession under the hood
+     - Parameter url: The URL to be fetched. Generally comes from the Endpoint
+     - Parameter handler: A Result<Data, Error> of the Fetch Task
+     - Returns: The URLSessionDataTask for the fetch. Reference can be used to cancel ongoing requests.
+     */
     @discardableResult
     func loadData(
         _ url: URL,
@@ -53,7 +90,11 @@ public struct Endpoint {
 }
 
 public extension Endpoint {
-    // Keep it backwards compatible
+    /**
+     Create an endpoint from a string referencing an URL
+     Useful for when API requests return URLs that need to be further fetched
+     - Parameter urlString: The URL string of the endpoint
+     **/
     init(from urlString: String) {
         if let url = URL(string: urlString) {
             path = url.path
@@ -64,8 +105,10 @@ public extension Endpoint {
             path = ""
         }
     }
-    // We still have to keep 'url' as an optional, since we're
-    // dealing with dynamic components that could be invalid.
+
+    /// Constructs an URL from the path and query items
+    /// We still have to keep 'url' as an optional, since we're
+    /// dealing with dynamic components that could be invalid.
     var url: URL? {
         var components = URLComponents()
         components.scheme = "https"
@@ -84,7 +127,15 @@ public extension Endpoint {
     }
 }
 
+// Define all endpoints here
 public extension Endpoint {
+    
+    /**
+     Fetches all available Pokemon. Note that this requires further requests to get full data
+     By default, the limit is set to 20 with subsequent offsets of 20
+     - Parameter limit: Number of Items to fetch every request
+     - Parameter offset: Offset of items already fetched
+    */
     static func getAllPokemon(with limit: Int? = nil, and offset: Int? = nil) -> Self {
         var queryItems: [URLQueryItem] = []
         if let limitValue = limit {
@@ -96,14 +147,26 @@ public extension Endpoint {
         return Endpoint(path: "/api/v2" + "/pokemon", queryItems: queryItems)
     }
     
+    /**
+     Fetches a Single Pokemon. Must supply the Pokemon ID or it's Name
+     - Parameter idOrName: String for Pokemon ID or Pokemon's Name
+     */
     static func getPokemon(with idOrName: String) -> Self {
         Endpoint(path: "/api/v2" + "/pokemon/\(idOrName)")
     }
     
+    /**
+     Fetches a Pokemon's Species info. Must supply the Pokemon ID or it's Name
+     - Parameter idOrName: String for Pokemon ID or Pokemon's Name
+     */
     static func getPokemonSpecies(with idOrName: String) -> Self {
         Endpoint(path: "/api/v2" + "/pokemon-species/\(idOrName)")
     }
     
+    /**
+     Fetches Pokemon's Stats. Must supply the Pokemon ID or it's Name
+     - Parameter idOrName: String for Pokemon ID or Pokemon's Name
+     */
     static func getPokemonStats(with idOrName: String) -> Self {
         Endpoint(path: "/api/v2" + "/stat/\(idOrName)")
     }

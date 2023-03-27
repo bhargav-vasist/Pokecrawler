@@ -4,19 +4,27 @@
 //
 //  Created by Bhargav Vasist on 20/03/23.
 //
-
 // Ideally I'd like to keep a network layer manager abstracted from UI libraries but alas I must cut corners.
 import UIKit
 
 class PKNetworkManager: NetworkManagingKind {
+    
+    /// Fully mocked NetworkSession. Wraps URLSession.
     internal let session: NetworkSession
     
+    /// Stores Images for URL keys
     internal var cache = NSCache<NSString, UIImage>()
     
     init(session: NetworkSession = URLSession.shared) {
         self.session = session
     }
     
+    /**
+     Make a Network Fetch Request.
+     Uses URLSessionDataTask under the hood
+     - Parameter endpoint: The Endpoint to be fetched
+     - Parameter completionHandler: A Result<Data, Error> of the Fetch Task
+     */
     func fetch(_ endpoint: Endpoint, completionHandler: @escaping NetworkHandler) {
         if let requestURL = endpoint.url {
             let request = session.loadData(requestURL) { result in
@@ -33,6 +41,13 @@ class PKNetworkManager: NetworkManagingKind {
         }
     }
     
+    /**
+     Make a Network Fetch Request for paginated results.
+     Automatically fetches nested data for each resulting URL
+     Uses URLSessionDataTask under the hood with DispatchGroups for managing dependencies with Multiprocesses
+     - Parameter endpoint: The Endpoint to be fetched
+     - Parameter completionHandler: A Result<Data, Error> of the Fetch Task
+     */
     func fetchPaginated(_ endpoint: Endpoint, completionHandler: @escaping NetworkPaginatedHandler) {
         let dispatchGroup = DispatchGroup()
         var paginatedArray: [Data] = []
@@ -74,6 +89,13 @@ class PKNetworkManager: NetworkManagingKind {
         }
     }
     
+    /**
+     Fetches an image from the web with automatic caching.
+     Uses URLSessionDataTask under the hood
+     - Parameter urlString: Image URL
+     - Parameter completionHandler: A Result<UIImage, Error> of the Fetch Task
+     - Returns: The URLSessionDataTask for the fetch. Reference can be used to cancel ongoing requests
+     */
     func getAvatarImage(
         urlString: String,
         completionHandler: @escaping (Result<UIImage, NetworkingError>) -> Void

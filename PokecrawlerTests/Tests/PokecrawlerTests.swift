@@ -8,7 +8,6 @@
 import XCTest
 @testable import Pokecrawler
 
-// TODO: - Profile and check performance for tests.
 final class PokecrawlerTests: XCTestCase {
 
     override func setUpWithError() throws {

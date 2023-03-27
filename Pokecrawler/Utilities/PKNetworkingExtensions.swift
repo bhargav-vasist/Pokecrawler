@@ -20,6 +20,11 @@ extension URL {
 // Inspired by https://www.swiftbysundell.com/articles/mocking-in-swift/
 extension URLSession: NetworkSession {
     
+    /**
+     Interfaces URLSession to conform to our Partial Mocking Protocol
+     - Parameter url: URL to be fetched. Generally comes from Endpoint
+     - Parameter handler: A Result<Data, Error> of the Fetch Task
+     */
     @discardableResult
     public func loadData(
         _ url: URL,

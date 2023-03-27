@@ -50,6 +50,8 @@ class PKPokeFullStat: Codable {
 }
 
 enum PKPokemonBaseStat: String, Codable {
+    // Since we use the Codable Enum directly for encoding/decoding,
+    // we keep the name to match the keys value 
     // swiftlint:disable identifier_name
     case hp
     // swiftlint:enable identifier_name
@@ -82,6 +84,9 @@ enum PKPokemonBaseStat: String, Codable {
         }
     }
     
+    // The maximum values thus far in all Pokemon Games
+    // for each base stat. Used to determine the progress bar
+    // percentage for base stats
     func getMaxValue() -> Int {
         switch self {
         case .hp:

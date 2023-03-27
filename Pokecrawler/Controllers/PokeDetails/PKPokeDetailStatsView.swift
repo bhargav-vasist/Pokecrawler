@@ -9,8 +9,10 @@ import UIKit
 
 class PKPokeDetailsStatsView: UIView {
     
+    // MARK: - Models
     private var pokemonModel: PKPokemonModel!
     
+    // MARK: - View
     lazy private var mainStackView: UIStackView = {
         let stack = PKVertStackView(with: [])
         stack.alignment = .leading
@@ -19,6 +21,7 @@ class PKPokeDetailsStatsView: UIView {
         return stack
     }()
     
+    // MARK: - Lifecycle Methods
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
@@ -51,6 +54,7 @@ class PKPokeDetailsStatsView: UIView {
         }
     }
     
+    // MARK: - Layouts and Constraints
     private func configureLayout() {
         NSLayoutConstraint.activate([
             mainStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
@@ -62,14 +66,17 @@ class PKPokeDetailsStatsView: UIView {
 
 class PKPokeDetailsStatsRowView: UIView {
     
+    // MARK: - Models
     private var statName: PKPokemonBaseStat!
     private var statValue: Int!
     private var pokeType: PKPokemonBaseType?
     
+    // MARK: - Computed properties
     private var scaledBaseStatValue: Float {
         (Float(statValue)) / Float(statName.getMaxValue())
     }
     
+    // MARK: - Views
     lazy private var statNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -95,6 +102,7 @@ class PKPokeDetailsStatsRowView: UIView {
         return progressView
     }()
     
+    // MARK: - Lifecycle Methods
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
@@ -121,6 +129,7 @@ class PKPokeDetailsStatsRowView: UIView {
         statProgressbar.progress = scaledBaseStatValue
     }
     
+    // MARK: - Layouts and Constraints
     private func configureLayout() {
         let screenWidth = UIScreen.main.bounds.width
 

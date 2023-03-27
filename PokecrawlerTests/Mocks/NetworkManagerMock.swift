@@ -58,7 +58,7 @@ class NetworkManagerMock: NetworkManagingKind {
         urlString: String,
         completionHandler: @escaping (Result<UIImage, Pokecrawler.NetworkingError>) -> Void
     ) -> URLSessionDataTask? {
-        // TODO: - check for corrrect caching
+        // WIP: - check for corrrect caching
         return nil
     }
 }
