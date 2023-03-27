@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootVC = PKPokedexViewController(with: PKNetworkManager())
         window?.rootViewController = UINavigationController(rootViewController: rootVC)
         window?.makeKeyAndVisible()
+        if let darkModeEnabled = PKStorageManager().getFromDefaults(for: .darkModeToggle) as? Bool {
+            window?.overrideUserInterfaceStyle = darkModeEnabled ? .dark : .light
+        }
         return true
     }
 

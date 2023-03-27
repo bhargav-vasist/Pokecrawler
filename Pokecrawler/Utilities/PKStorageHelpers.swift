@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum UserDefaultKeys: String {
+    case darkModeToggle = "DarkModeToggle"
+    case systemDefault = "SystemDefault"
+}
+
 public enum StorageError: String, Error {
     case invalidURL = "Invalid URL"
     case decodeError = "The JSON data could not be decoded correctly for its model type."

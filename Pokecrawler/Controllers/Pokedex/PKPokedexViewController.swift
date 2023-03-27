@@ -49,10 +49,27 @@ class PKPokedexViewController: UIViewController {
     
     private func configureNavigation() {
         view.backgroundColor = .systemBackground
+        
+        navigationController?.navigationBar.tintColor = .label
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setNavigationBarHidden(false, animated: true)
         title = "Pokedex"
+        
+        let settingsButton = UIButton(type: .system)
+        settingsButton.setImage(UIImage(systemName: "gear"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        
+        // Create a bar button item with the button as its custom view
+        let settingsBarButtonItem = UIBarButtonItem(customView: settingsButton)
+
+        // Add the button to the navigation bar
+        navigationItem.rightBarButtonItem = settingsBarButtonItem
+    }
+    
+    // Function to handle the settings button being tapped
+    @objc func settingsButtonTapped() {
+        navigationController?.pushViewController(PKSettingsTableViewController(with: PKStorageManager()), animated: true)
     }
     
     private func configureDataSource() {
