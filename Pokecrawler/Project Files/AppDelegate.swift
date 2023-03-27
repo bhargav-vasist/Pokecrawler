@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         if let darkModeEnabled = PKStorageManager().getFromDefaults(for: .darkModeToggle) as? Bool {
             window?.overrideUserInterfaceStyle = darkModeEnabled ? .dark : .light
+        } else {
+            window?.overrideUserInterfaceStyle = .light
         }
         return true
     }
