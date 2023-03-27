@@ -65,6 +65,7 @@ class PKPokedexDataSource: UICollectionViewDiffableDataSource<PokeSections, PKPo
     
     // Paginated calls to fetch more pokemon.
     func fetchEvenMorePokeData() {
+        // There's another call going on. Do not fetch more.
         guard !isFetchingNextPage else {
             return
         }
