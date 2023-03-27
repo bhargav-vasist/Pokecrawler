@@ -16,7 +16,7 @@ Here's the repository for the Pokecrawler App for the take home coding challenge
 - Examples of Fakes, Stubs, Mocks in Network Tests
 - Parallax view demo for detail page
 - Adding favorites with File Persistence
-- Adaptable colors for automatic dark mode support
+- Adaptable colors for automatic dark mode support - Includes a handy toggle
 - Adaptable fontsizes for different device sizes
 - SwiftLint configured and ready
 
