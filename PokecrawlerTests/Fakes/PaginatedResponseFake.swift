@@ -26,7 +26,7 @@ struct PaginatedResponseFake {
             PKPaginatedResponseModel.PKPaginatedResults(name: "Fake 9", url: fakedURL),
             PKPaginatedResponseModel.PKPaginatedResults(name: "Fake 10", url: fakedURL)
         ]
-        var fakedData = PKPaginatedResponseModel(count: fakeArray.count, next: nil, previous: nil, results: fakeArray)
+        let fakedData = PKPaginatedResponseModel(count: fakeArray.count, next: nil, previous: nil, results: fakeArray)
         return fakedData
     }
 }

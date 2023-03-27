@@ -171,7 +171,13 @@ class PKPokeDetailViewController: UIViewController {
     
     private func fetchAndUpdateFavouriteStatus() {
         Task { [weak self] in
-            self?.isFavorited = try await storageManager.retrievefavourites().contains(where: { $0.id == pokemonModel.id })
+            // Capture self explicitly, otherwise we don't need the update
+            guard let unwrappedSelf = self else {
+                return
+            }
+            unwrappedSelf.isFavorited = try await
+                                        unwrappedSelf.storageManager.retrievefavourites()
+                                        .contains(where: { $0 == unwrappedSelf.pokemonModel })
         }
     }
     
