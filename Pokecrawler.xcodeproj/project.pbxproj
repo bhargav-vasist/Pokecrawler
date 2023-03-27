@@ -13,6 +13,8 @@
 		BE8FF2A829CE126E00A0D303 /* NetworkRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */; };
 		BE8FF2AA29CE130700A0D303 /* ImageCacheFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2A929CE130700A0D303 /* ImageCacheFake.swift */; };
 		BE8FF2B329D0FC2900A0D303 /* PKStorageHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2B229D0FC2900A0D303 /* PKStorageHelpers.swift */; };
+		BE8FF2B629D10D2F00A0D303 /* PKSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2B529D10D2F00A0D303 /* PKSettingsTableViewController.swift */; };
+		BE8FF2B829D121C000A0D303 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8FF2B729D121C000A0D303 /* UIApplicationExtension.swift */; };
 		BEE0931729C8F5C900D304F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0931629C8F5C900D304F9 /* AppDelegate.swift */; };
 		BEE0931929C8F5C900D304F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0931829C8F5C900D304F9 /* SceneDelegate.swift */; };
 		BEE0931B29C8F5C900D304F9 /* PKPokedexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE0931A29C8F5C900D304F9 /* PKPokedexViewController.swift */; };
@@ -74,6 +76,8 @@
 		BE8FF2A729CE126E00A0D303 /* NetworkRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestTests.swift; sourceTree = "<group>"; };
 		BE8FF2A929CE130700A0D303 /* ImageCacheFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheFake.swift; sourceTree = "<group>"; };
 		BE8FF2B229D0FC2900A0D303 /* PKStorageHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKStorageHelpers.swift; sourceTree = "<group>"; };
+		BE8FF2B529D10D2F00A0D303 /* PKSettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSettingsTableViewController.swift; sourceTree = "<group>"; };
+		BE8FF2B729D121C000A0D303 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		BEE0931329C8F5C900D304F9 /* Pokecrawler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokecrawler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEE0931629C8F5C900D304F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEE0931829C8F5C900D304F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +207,14 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		BE8FF2B429D10C3F00A0D303 /* UserSettings */ = {
+			isa = PBXGroup;
+			children = (
+				BE8FF2B529D10D2F00A0D303 /* PKSettingsTableViewController.swift */,
+			);
+			path = UserSettings;
+			sourceTree = "<group>";
+		};
 		BEE0930A29C8F5C900D304F9 = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +283,7 @@
 		BEE0934F29C8F7CB00D304F9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BE8FF2B429D10C3F00A0D303 /* UserSettings */,
 				BEE0936F29CA45DC00D304F9 /* PokeDetails */,
 				BEE0936E29CA45D300D304F9 /* Pokedex */,
 			);
@@ -293,6 +306,7 @@
 				BEE0934C29C8F7B200D304F9 /* PKNetworkingHelpers.swift */,
 				BEE0936829C9CBA000D304F9 /* UIColorExtensions.swift */,
 				BE8FF2B229D0FC2900A0D303 /* PKStorageHelpers.swift */,
+				BE8FF2B729D121C000A0D303 /* UIApplicationExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -517,6 +531,8 @@
 				BEE0936529C9BEA800D304F9 /* PKVertStackView.swift in Sources */,
 				BEE0937729CA5BF400D304F9 /* PKPokemonType.swift in Sources */,
 				BEE0937329CA5B4000D304F9 /* PKPokemonTypeStackView.swift in Sources */,
+				BE8FF2B829D121C000A0D303 /* UIApplicationExtension.swift in Sources */,
+				BE8FF2B629D10D2F00A0D303 /* PKSettingsTableViewController.swift in Sources */,
 				BEE0935F29C9B83400D304F9 /* PKPrimaryTitleLabel.swift in Sources */,
 				BEE0936B29C9D14400D304F9 /* PKPokemonCard.swift in Sources */,
 				BEE0937529CA5BB700D304F9 /* PKPokemonTypeChipLabel.swift in Sources */,

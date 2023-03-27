@@ -16,10 +16,20 @@ enum FavouriteUpdateOp {
 
 public class PKStorageManager {
     
-    internal var fileManager: FileManager
-    
-    init(fileManager: FileManager = FileManager.default) {
+    private var fileManager: FileManager
+    private var userDefaults: UserDefaults
+
+    init(fileManager: FileManager = FileManager.default, and userDefaults: UserDefaults = UserDefaults()) {
         self.fileManager = fileManager
+        self.userDefaults = userDefaults
+    }
+    
+    func getFromDefaults(for key: UserDefaultKeys) -> Any? {
+        return userDefaults.object(forKey: key.rawValue)
+    }
+    
+    func updateDefaults(for key: UserDefaultKeys, with value: Any) {
+        userDefaults.set(value, forKey: key.rawValue)
     }
     
     func updateFavouritePokemon(with pokemon: PKPokemonModel, typeOfUpdate: FavouriteUpdateOp) async throws -> Bool {

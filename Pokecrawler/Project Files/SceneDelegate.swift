@@ -21,6 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let rootVC = PKPokedexViewController(with: PKNetworkManager())
         window?.rootViewController = UINavigationController(rootViewController: rootVC)
         window?.makeKeyAndVisible()
+        if let darkModeEnabled = PKStorageManager().getFromDefaults(for: .darkModeToggle) as? Bool {
+            window?.overrideUserInterfaceStyle = darkModeEnabled ? .dark : .light
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
