@@ -1,5 +1,5 @@
 # Pokecrawler
-Here's the repository for the Pokecrawler App for the take home coding challenge.
+Here's the repository for the Pokecrawler App
 
 ## Installation
 - `git clone`
