@@ -17,10 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         // Override point for customization after application launch.
+        
+        // Start loading the Pokemon search index in background
+        // This fetches all Pokemon names for instant search
+        PKPokemonIndex.shared.loadAndSync()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
-        let rootVC = PKPokedexViewController(with: PKNetworkManager())
-        window?.rootViewController = UINavigationController(rootViewController: rootVC)
+        
+        // Use TabBarController as root
+        let tabBarController = PKMainTabBarController()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+        
+        // Apply dark mode preference
         if let darkModeEnabled = PKStorageManager().getFromDefaults(for: .darkModeToggle) as? Bool {
             window?.overrideUserInterfaceStyle = darkModeEnabled ? .dark : .light
         } else {

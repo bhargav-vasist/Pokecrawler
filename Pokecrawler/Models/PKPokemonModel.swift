@@ -53,6 +53,12 @@ class PKPokemonModel: Codable, Hashable {
     /// A list of details showing types this Pokémon has
     var types: [PKPokemonSpeciesType]
     
+    /// A list of abilities this Pokémon could potentially have
+    var abilities: [PKPokemonAbility]?
+    
+    /// A list of moves along with learn methods and level details pertaining to specific version groups
+    var moves: [PKPokemonMove]?
+    
     static var encoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase

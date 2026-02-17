@@ -10,46 +10,67 @@ import UIKit
 class PKPokeDetailView: UIView {
     
     // MARK: - Models
-    enum PKPokeDetailTabs: String, CaseIterable {
-        case about
-        case stats
+    enum PKPokeDetailTabs: Int, CaseIterable {
+        case about = 0
+        case stats = 1
+        case moves = 2
+        
+        var title: String {
+            switch self {
+            case .about: return "About"
+            case .stats: return "Stats"
+            case .moves: return "Moves"
+            }
+        }
     }
     
     private var pokemonModel: PKPokemonModel!
     
+    /// Callback to present all moves modal
+    var onShowAllMoves: ((_ moves: [(name: String, level: Int)], _ color: UIColor, _ pokemonName: String) -> Void)?
+    
     // MARK: - Views
-    lazy private var segmentedDetails: UISegmentedControl = {
-        let segmentNames = PKPokeDetailTabs.allCases.map {$0.rawValue.capitalized}
-        let segCtrl = UISegmentedControl(items: segmentNames)
-        segCtrl.translatesAutoresizingMaskIntoConstraints = false
-        segCtrl.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
-        segCtrl.selectedSegmentIndex = 0
-        addSubview(segCtrl)
-        return segCtrl
+    lazy private var segmentedControl: UISegmentedControl = {
+        let items = PKPokeDetailTabs.allCases.map { $0.title }
+        let seg = UISegmentedControl(items: items)
+        seg.translatesAutoresizingMaskIntoConstraints = false
+        seg.selectedSegmentIndex = 0
+        seg.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        return seg
     }()
     
-    lazy private var containerView: UIView = {
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(containerView)
-        return containerView
+    lazy private var contentContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     lazy private var aboutView: PKPokeDetailAboutView = {
-        let abView = PKPokeDetailAboutView(with: pokemonModel)
-        containerView.addSubview(abView)
-        abView.isHidden = true
-        return abView
+        let view = PKPokeDetailAboutView(with: pokemonModel)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     lazy private var statsView: PKPokeDetailsStatsView = {
-        let statview = PKPokeDetailsStatsView(with: pokemonModel)
-        containerView.addSubview(statview)
-        statview.isHidden = true
-        return statview
+        let view = PKPokeDetailsStatsView(with: pokemonModel)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
     }()
     
-    // MARK: - Lifecyle Methods
+    lazy private var movesView: PKPokeDetailMovesView = {
+        let view = PKPokeDetailMovesView(with: pokemonModel)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        return view
+    }()
+    
+    // Bottom constraints for dynamic height based on selected tab
+    private var aboutBottomConstraint: NSLayoutConstraint!
+    private var statsBottomConstraint: NSLayoutConstraint!
+    private var movesBottomConstraint: NSLayoutConstraint!
+    
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
@@ -61,74 +82,97 @@ class PKPokeDetailView: UIView {
     convenience init(with pokemonModel: PKPokemonModel) {
         self.init(frame: .zero)
         self.pokemonModel = pokemonModel
-        configureView()
-        configureLayout()
+        setupView()
+        setupLayout()
     }
     
-    private func configureView() {
+    // MARK: - Setup
+    private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemBackground
         layer.cornerRadius = 24
+        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        addSubview(segmentedControl)
+        addSubview(contentContainer)
+        
+        contentContainer.addSubview(aboutView)
+        contentContainer.addSubview(statsView)
+        contentContainer.addSubview(movesView)
+        
+        // Handle "Show All Moves" tap
+        movesView.onShowAllTapped = { [weak self] moves, color in
+            guard let self = self else { return }
+            let pokemonName = self.pokemonModel.name.capitalized
+            self.onShowAllMoves?(moves, color, pokemonName)
+        }
     }
     
-    // MARK: - Layouts and Constraint
-    private func configureLayout() {
+    private func setupLayout() {
+        // Bottom constraints - determines content height based on visible tab
+//        aboutBottomConstraint = contentContainer.bottomAnchor.constraint(greaterThanOrEqualTo: aboutView.bottomAnchor, constant: 100)
+//        statsBottomConstraint = contentContainer.bottomAnchor.constraint(greaterThanOrEqualTo: statsView.bottomAnchor, constant: 100)
+//        movesBottomConstraint = contentContainer.bottomAnchor.constraint(greaterThanOrEqualTo: movesView.bottomAnchor, constant: 100)
+        
+        // Start with about view active
+//        aboutBottomConstraint.isActive = true
+        
         NSLayoutConstraint.activate([
-            segmentedDetails.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 32),
-            segmentedDetails.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            segmentedDetails.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            // Segmented control at top
+            segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            containerView.topAnchor.constraint(equalTo: segmentedDetails.bottomAnchor, constant: 16),
-            containerView.leadingAnchor.constraint(equalTo: segmentedDetails.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: segmentedDetails.trailingAnchor),
+            // Content container below segmented control
+            contentContainer.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 16),
+            contentContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            contentContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            contentContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            aboutView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            aboutView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            aboutView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            aboutView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            // About view - pinned to top
+            aboutView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            aboutView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            aboutView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
             
-            statsView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            statsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            statsView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            statsView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            // Stats view - pinned to top
+            statsView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            statsView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            statsView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            
+            // Moves view - pinned to top
+            movesView.topAnchor.constraint(equalTo: contentContainer.topAnchor),
+            movesView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor),
+            movesView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor)
         ])
     }
     
-    // Ideally, a ViewModel does this job for the view.
-    // Loads the async fetched data to the right view.
+    // MARK: - Public
     func loadViews(with speciesData: PKPokemonSpecies) {
         DispatchQueue.main.async { [weak self] in
-            self?.populateViews(with: speciesData)
+            self?.aboutView.loadView(with: speciesData)
         }
     }
     
-    // Set the appropriate data to the respective view
-    private func populateViews(with speciesData: PKPokemonSpecies) {
-        let allCases = PKPokeDetailTabs.allCases
-        let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
-        switch selectedItem {
-        case .about:
-            aboutView.loadView(with: speciesData)
-        case .stats:
-            break // No op because Stats already has all the data it needs
-        }
-        segmentTapped()
-    }
-    
-    // Only changes the visual state of the segment selected
-    // and also toggles the visibilty of the other views
-    @objc private func segmentTapped() {
-        let allCases = PKPokeDetailTabs.allCases
-        let selectedItem = allCases[segmentedDetails.selectedSegmentIndex]
-        let allViews = [aboutView, statsView]
+    // MARK: - Segment
+    @objc private func segmentChanged() {
+        let index = segmentedControl.selectedSegmentIndex
         
-        // Hide all and unhide only the selected view
-        allViews.forEach {$0.isHidden = true}
-        switch selectedItem {
-        case .about:
-            aboutView.isHidden = false
-        case .stats:
-            statsView.isHidden = false
+        // Update visibility with fade animation
+        UIView.animate(withDuration: 0.2) {
+            self.aboutView.alpha = index == 0 ? 1 : 0
+            self.statsView.alpha = index == 1 ? 1 : 0
+            self.movesView.alpha = index == 2 ? 1 : 0
         }
+        
+        aboutView.isHidden = index != 0
+        statsView.isHidden = index != 1
+        movesView.isHidden = index != 2
+        
+        // Update bottom constraints for proper sizing
+//        aboutBottomConstraint.isActive = index == 0
+//        statsBottomConstraint.isActive = index == 1
+//        movesBottomConstraint.isActive = index == 2
+        
+        setNeedsLayout()
     }
 }

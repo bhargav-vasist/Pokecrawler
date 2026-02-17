@@ -14,12 +14,30 @@ struct PKPokeDetailCardViewModel {
     var infoDescriptionOne: String
     var infoDescriptionTwo: String
     
-    // If supplying with 
+    /// Formatted height for accessibility (e.g., "1.7 meters")
+    var accessibilityHeight: String
+    /// Formatted weight for accessibility (e.g., "90.5 kilograms")
+    var accessibilityWeight: String
+    
     init(with pokemonModel: PKPokemonModel) {
         infoTitleOne = "Height"
         infoTitleTwo = "Weight"
-        infoDescriptionOne = "\(pokemonModel.height * 10) cm"
-        infoDescriptionTwo = "\(Float(pokemonModel.weight) / 100) kg"
+        
+        // Height in decimeters → display in cm or m
+        let heightCm = pokemonModel.height * 10
+        if heightCm >= 100 {
+            let heightM = Float(heightCm) / 100
+            infoDescriptionOne = String(format: "%.1f m", heightM)
+            accessibilityHeight = String(format: "%.1f meters", heightM)
+        } else {
+            infoDescriptionOne = "\(heightCm) cm"
+            accessibilityHeight = "\(heightCm) centimeters"
+        }
+        
+        // Weight in hectograms → display in kg
+        let weightKg = Float(pokemonModel.weight) / 10
+        infoDescriptionTwo = String(format: "%.1f kg", weightKg)
+        accessibilityWeight = String(format: "%.1f kilograms", weightKg)
     }
 }
 
@@ -110,17 +128,20 @@ class PKPokeDetailCardView: UIView {
         // set the shadow of the view's layer
         layer.backgroundColor = UIColor.clear.cgColor
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        layer.shadowOpacity = 0.2
-        layer.shadowRadius = 4.0
+        layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        layer.shadowOpacity = 0.1
+        layer.shadowRadius = 8.0
         layer.masksToBounds = false
         
         // set the cornerRadius of the containerView's layer
         containerView.layer.cornerRadius = cornerRadius
         containerView.layer.masksToBounds = true
-        containerView.layer.borderColor = UIColor.gray.cgColor
-        containerView.layer.borderWidth = 0.2
+        containerView.layer.borderColor = UIColor.separator.cgColor
+        containerView.layer.borderWidth = 0.5
         
+        // Accessibility
+        isAccessibilityElement = true
+        accessibilityLabel = "Height: \(viewModel.accessibilityHeight), Weight: \(viewModel.accessibilityWeight)"
     }
     
     // MARK: - Layouts and Constraints

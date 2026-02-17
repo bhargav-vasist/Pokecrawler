@@ -113,7 +113,6 @@ extension UIColor {
         public static let concrete = UIColor(hex: 0x95A5A6)!
     }
 
-    // swiftlint:enable type_body_length
     // This is designed by manual inspection of Nintendo's official colors
     enum PokeColors {
         public static let darkBrown = UIColor(hex: 0x705848)!

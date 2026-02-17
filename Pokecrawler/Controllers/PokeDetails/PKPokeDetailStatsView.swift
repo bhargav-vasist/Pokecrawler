@@ -125,8 +125,12 @@ class PKPokeDetailsStatsRowView: UIView {
         
         statNameLabel.text = statName.getDisplayName()
         statValueLabel.text = String(statValue)
-
         statProgressbar.progress = scaledBaseStatValue
+        
+        // Accessibility - combine into single readable element
+        isAccessibilityElement = true
+        let percentage = Int(scaledBaseStatValue * 100)
+        accessibilityLabel = "\(statName.getDisplayName()): \(statValue) out of \(statName.getMaxValue()), \(percentage) percent"
     }
     
     // MARK: - Layouts and Constraints

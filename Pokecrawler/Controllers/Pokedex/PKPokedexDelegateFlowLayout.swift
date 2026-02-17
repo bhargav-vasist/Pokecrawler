@@ -11,11 +11,9 @@ class PKPokedexDelegateFlowLayout: NSObject {
     var pokedexViewController: PKPokedexViewController?
     
     struct LayoutConstants {
-        static let maxItemsPerRow = 2.0
-        static let interItemSpacing = 5.0
-        static let cellAspectRatio = 1.45
-        static let horizontalMargin = 16.0
-        static let interLineSpacing = 16.0
+        static let itemsPerRow: CGFloat = 2.0
+        static let spacing: CGFloat = 16.0        // Same spacing everywhere (edges + between)
+        static let cellAspectRatio: CGFloat = 1.35
     }
     
     init(_ viewController: PKPokedexViewController) {
@@ -30,15 +28,18 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        let screenWidth = UIScreen.main.bounds.width
+        let screenWidth = collectionView.bounds.width
+        let spacing = LayoutConstants.spacing
+        let itemsPerRow = LayoutConstants.itemsPerRow
         
-        // Weird math for getting widths fitting for most screensizes.
-        let cellItemWidth = (screenWidth / LayoutConstants.maxItemsPerRow)
-                            - ((LayoutConstants.maxItemsPerRow * LayoutConstants.interItemSpacing)
-                            + LayoutConstants.horizontalMargin)
-        let cellItemHeight = cellItemWidth * LayoutConstants.cellAspectRatio
+        // Total horizontal spacing: left edge + middle gaps + right edge
+        // For 2 items: spacing + spacing + spacing = 3 * spacing
+        let totalSpacing = spacing * (itemsPerRow + 1)
+        let availableWidth = screenWidth - totalSpacing
+        let cellWidth = availableWidth / itemsPerRow
+        let cellHeight = cellWidth * LayoutConstants.cellAspectRatio
         
-        return CGSize(width: cellItemWidth, height: cellItemHeight)
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(
@@ -46,7 +47,7 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return LayoutConstants.interItemSpacing
+        return LayoutConstants.spacing
     }
     
     func collectionView(
@@ -54,7 +55,7 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        return LayoutConstants.interLineSpacing
+        return LayoutConstants.spacing
     }
     
     func collectionView(
@@ -64,9 +65,9 @@ extension PKPokedexDelegateFlowLayout: UICollectionViewDelegateFlowLayout {
     ) -> UIEdgeInsets {
         return UIEdgeInsets(
             top: 0.0,
-            left: LayoutConstants.horizontalMargin,
-            bottom: 0.0,
-            right: LayoutConstants.horizontalMargin
+            left: LayoutConstants.spacing,
+            bottom: LayoutConstants.spacing,
+            right: LayoutConstants.spacing
         )
     }
     
